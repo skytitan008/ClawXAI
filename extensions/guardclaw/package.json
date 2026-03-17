@@ -1,0 +1,15 @@
+{
+  "name": "@openclaw/guardclaw",
+  "version": "2026.3.9",
+  "private": true,
+  "description": "Privacy-aware plugin with sensitivity detection, guard agent support, and built-in privacy proxy",
+  "type": "module",
+  "dependencies": {
+    "@sinclair/typebox": "0.34.48"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
