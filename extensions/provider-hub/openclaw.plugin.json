@@ -1,5 +1,11 @@
 {
   "id": "provider-hub",
   "name": "Provider Hub",
-  "description": "Pre-built LLM provider catalog (global + China + local) with simplified API key management"
+  "description": "Pre-built LLM provider catalog (global + China + local) with simplified API key management",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
 }
