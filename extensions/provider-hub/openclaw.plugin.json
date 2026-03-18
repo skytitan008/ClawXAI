@@ -1,0 +1,5 @@
+{
+  "id": "provider-hub",
+  "name": "Provider Hub",
+  "description": "Pre-built LLM provider catalog (global + China + local) with simplified API key management"
+}
