@@ -5,7 +5,7 @@
 ### 安全 · 省钱 · 高效
 
 端云协同 AI 智能体  
-**EdgeClaw**：Claude Code 体验感的OpenClaw
+**EdgeClaw**：Claude Code 体验带到 OpenClaw
 
 【中文 | **[English](./README.md)**】
 
@@ -19,7 +19,7 @@
 
 **最新动态** 🔥
 
-- **[2026.04.01]** 🎉 EdgeClaw 2.0 正式开源，携全新记忆引擎与省钱路由，在 OpenClaw 上实现并超越 Claude Code 体验！
+- **[2026.04.01]** 🎉 EdgeClaw 2.0 正式开源，携全新记忆引擎与省钱路由，把 Claude Code 体验带到 OpenClaw！
 - **[2026.04.01]** 🎉 [ClawXMemory](https://github.com/OpenBMB/ClawXMemory) 发布 — 参考 Claude Code memory 机制，针对 OpenClaw 场景提供更丝滑的体验，搭载多层结构化长期记忆与主动推理！
 - **[2026.03.25]** 🎉 [ClawXRouter](https://github.com/OpenBMB/clawxrouter) 发布 — 5 级省钱路由 + 三级隐私协同 + 可视化 Dashboard
 - **[2026.03.13]** 🎉 EdgeClaw 新增成本感知协同：自动判断任务复杂度，为云端匹配最经济的模型

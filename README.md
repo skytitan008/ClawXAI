@@ -1,22 +1,13 @@
 <div align="center">
 
-# <<<<<<< HEAD
-
 <img src="./assets/EdgeClaw-logo.png" alt="EdgeClaw Logo" width="200">
-
-> > > > > > > f80295fdbbb17f4671e5b26acbddcc9283992294
 
 ### Secure · Cost-Effective · Efficient
 
 Edge-Cloud Collaborative AI Agent  
-**EdgeClaw**: Keep sensitive data off the cloud, let cheap models handle 80% of requests
+**EdgeClaw**: Bringing the Claude Code Experience to OpenClaw
 
-<<<<<<< HEAD
-
-=======
-
-> > > > > > > f80295fdbbb17f4671e5b26acbddcc9283992294
-> > > > > > > 【**[中文](./readme_zh.md)** | English】
+【**[中文](./readme_zh.md)** | English】
 
 👋 Join our community for discussion and support!
 
@@ -28,6 +19,9 @@ Edge-Cloud Collaborative AI Agent
 
 **What's New** 🔥
 
+- **[2026.04.01]** 🎉 EdgeClaw 2.0 is officially open-sourced, featuring a brand-new memory engine and cost-saving router — bringing the Claude Code experience to OpenClaw!
+- **[2026.04.01]** 🎉 [ClawXMemory](https://github.com/OpenBMB/ClawXMemory) released — inspired by Claude Code's memory mechanism, it delivers a smoother experience for OpenClaw scenarios with multi-layered structured long-term memory and proactive reasoning!
+- **[2026.03.25]** 🎉 [ClawXRouter](https://github.com/OpenBMB/clawxrouter) released — 5-tier cost-saving routing + three-tier privacy collaboration + visual Dashboard
 - **[2026.03.13]** 🎉 EdgeClaw adds Cost-Aware Collaboration: automatically determines task complexity and matches the most economical cloud model
 - **[2026.02.12]** 🎉 EdgeClaw is officially open-sourced — an Edge-Cloud Collaborative AI Agent
 
@@ -37,35 +31,142 @@ Edge-Cloud Collaborative AI Agent
 
 EdgeClaw is an **Edge-Cloud Collaborative AI Agent** jointly developed by [THUNLP (Tsinghua University)](https://nlp.csai.tsinghua.edu.cn), [Renmin University of China](http://ai.ruc.edu.cn/), [AI9Stars](https://github.com/AI9Stars), [ModelBest](https://modelbest.cn/en), and [OpenBMB](https://www.openbmb.cn/home), built on top of [OpenClaw](https://github.com/openclaw/openclaw).
 
-In current AI Agent architectures, the edge side has long been overlooked — all data and tasks are funneled to the cloud, leading to privacy leaks and wasted compute. EdgeClaw reactivates the value of edge computing by constructing a customizable three-tier security system (S1 Passthrough / S2 Desensitization / S3 Local). Through a dual-engine on the edge (rule-based detection ~0ms + local LLM semantic detection ~1–2s), it classifies the sensitivity and complexity of every request in real time, then routes each request through a unified composable pipeline to the most privacy-safe and cost-effective processing path. With intelligent edge-cloud forwarding, developers can achieve seamless privacy protection — "public data to cloud, sensitive data desensitized, private data stays local" — without modifying any business logic.
+### OpenClaw vs Claude Code vs EdgeClaw
+
+|                                  | OpenClaw |     Claude Code      |                 **EdgeClaw**                  |
+| -------------------------------- | :------: | :------------------: | :-------------------------------------------: |
+| Cross-session project knowledge  |    ✗     |          ✓           |                     **✓**                     |
+| Persistent user preference       |    ✗     |          ✓           |                     **✓**                     |
+| Multi-layered structured memory  |    ✗     |          ✓           |                     **✓**                     |
+| Memory integration strategy      |  Recall  |    On-demand read    |            **Proactive reasoning**            |
+| Continuous memory consolidation  |    ✗     | Auto-Dream (backend) | **Auto-consolidation on idle & topic switch** |
+| Cost-aware routing               |    ✗     |          ✗           |             **58% cost savings**              |
+| Three-tier privacy collaboration |    ✗     |          ✗           |                 **S1/S2/S3**                  |
+| Visual Dashboard                 |    ✗     |          ✗           |                     **✓**                     |
+
+### ✨ Highlights at a Glance
+
+- **🧠 Memory Engine** — [ClawXMemory](https://github.com/OpenBMB/ClawXMemory): A structured long-term memory engine built for OpenClaw. Building on the ideas behind Claude Code's memory mechanism, it further introduces multi-layered structured memory and model-driven memory retrieval.
+- **💰 Cost-Saving Router** — [ClawXRouter](https://github.com/openbmb/clawxrouter): LLM-as-Judge automatically determines complexity, routing 60–80% of requests to cheaper models. Real-world PinchBench testing shows **58% cost savings** with scores **6.3% higher**.
+- **🔒 Three-Tier Privacy** — S1 direct cloud / S2 desensitized forwarding / S3 fully local processing — sensitive data never leaves the device.
+- **🚀 Zero Configuration** — `pnpm build && node openclaw.mjs gateway run`, auto-generates config on first launch, just fill in your API Key.
+- **📊 Dual Dashboard** — ClawXRouter routing config hot-reload + ClawXMemory memory canvas visualization.
 
 ---
 
-## ✨ Key Highlights
+## 📦 Quick Start
 
-**🤝 Edge-Cloud Division of Labor**
+### 1. Build
 
-The edge perceives data attributes (sensitivity, complexity); the cloud handles reasoning and generation. The edge covers the cloud's blind spots (sensitive data never leaves the device), while the cloud compensates for the edge's limitations (complex tasks are offloaded to the cloud).
+```bash
+git clone https://github.com/openbmb/edgeclaw.git
+cd edgeclaw
 
-**🔒 Three-Tier Security Collaboration**
+pnpm install
+pnpm build
+```
 
-Safe data (S1) — sent directly to the cloud; Sensitive data (S2) — desensitized on-device before forwarding to the cloud; Private data (S3) — processed entirely on-device, with the cloud only maintaining context continuity.
+### 2. Launch
 
-**💰 Cost-Aware Collaboration**
+```bash
+node openclaw.mjs gateway run
+```
 
-A local LLM semantically judges task complexity, routing simple tasks to cheap models and reserving expensive models for complex tasks only. In typical workflows, 60–80% of requests are forwarded to low-cost models, drastically cutting cloud token expenses.
+> EdgeClaw uses `~/.edgeclaw/` as the data directory by default, completely isolated from OpenClaw (`~/.openclaw/`). To customize the path, set the `OPENCLAW_STATE_DIR` environment variable.
 
-**🚀 Plug-and-Play, Zero Code Changes**
+**On first launch**, a complete configuration skeleton is auto-generated (`~/.edgeclaw/openclaw.json` + `clawxrouter.json`), with ClawXRouter and ClawXMemory as bundled extensions — no manual plugin installation required.
 
-EdgeClaw automatically intercepts and routes via its Hook mechanism — no modifications to any business logic required. It serves as a seamless drop-in replacement for OpenClaw.
+### 3. Fill in API Key
+
+The generated config has empty API Keys. Fill them in to get started:
+
+- **Edit the config file**: Modify the `apiKey` for each provider under `models.providers` in `~/.edgeclaw/openclaw.json`
+- **Dashboard hot-reload**: Visit `http://127.0.0.1:18790/plugins/clawxrouter/stats` and modify directly in the UI — changes take effect immediately
+
+> Tip: Setting the `EDGECLAW_API_KEY` environment variable before launch will auto-fill it.
+
+### 4. Verify
+
+```bash
+node openclaw.mjs agent --local --agent main -m "Hello"
+```
+
+When you see `[ClawXrouter] token-saver: S1 redirect →` and an agent reply, the deployment is successful.
+
+### Dashboard
+
+| Panel                                | URL                                                |
+| ------------------------------------ | -------------------------------------------------- |
+| ClawXRouter (routing config & stats) | `http://127.0.0.1:18790/plugins/clawxrouter/stats` |
+| ClawXMemory (memory visualization)   | `http://127.0.0.1:39394/clawxmemory/`              |
+
+> Having issues? Check the [Troubleshooting Guide](troubleshooting_zh.md)
 
 ---
 
-## 🔒 Three-Tier Security Collaboration
+## 🧠 ClawXMemory — Multi-Layered Long-Term Memory System
 
-### Three-Level Sensitivity Classification
+Developers who have used Claude Code know: what truly makes it indispensable isn't how good any single answer is, but that **it remembers you** — your coding style, project architecture, last week's discussion, even your preferred naming conventions.
 
-Every user message, tool call, and tool result is inspected in real time and automatically classified into one of three levels:
+**[ClawXMemory](https://github.com/OpenBMB/ClawXMemory) is the first plugin to bring Claude Code-like memory capabilities to the OpenClaw ecosystem.**
+
+| Core Memory Capability          | Standard OpenClaw | Claude Code    | ClawXMemory                               |
+| ------------------------------- | ----------------- | -------------- | ----------------------------------------- |
+| Cross-session project knowledge | ✗                 | ✓              | ✓                                         |
+| Persistent user preference      | ✗                 | ✓              | ✓                                         |
+| Multi-layered structured memory | ✗                 | ✓              | ✓                                         |
+| Memory integration strategy     | Recall            | On-demand read | Proactive reasoning                       |
+| Continuous memory consolidation | ✗                 | Auto-Dream     | Auto-consolidation on idle & topic switch |
+
+### Three-Layer Memory Architecture
+
+The system automatically distills information during conversations, building structured memory layer by layer:
+
+| Memory Layer | Type                             | Description                                                                |
+| ------------ | -------------------------------- | -------------------------------------------------------------------------- |
+| **L2**       | Project memory / Timeline memory | High-level long-term memory aggregated around specific topics or timelines |
+| **L1**       | Memory fragments                 | Structured core summaries distilled from concluded topics                  |
+| **L0**       | Raw conversations                | The lowest-level raw message records                                       |
+| **Global**   | User profile                     | A continuously updated global user preference singleton                    |
+
+When the model needs to recall, it **proactively navigates along the "memory tree" through reasoning** — first evaluating relevance from high-level memory (project/timeline/profile), drilling down into finer-grained fragments only when needed, and tracing back to specific conversations when necessary. This is closer to how a human expert reasons layer by layer than traditional vector retrieval.
+
+### Core Features
+
+- **Automatic memory construction**: No manual maintenance needed — automatically distills, aggregates, and updates during conversation
+- **Model-driven retrieval**: Uses reasoning instead of matching, truly understanding vague questions like "How is this project progressing?"
+- **Memory visualization Dashboard**: Canvas view and list view, with memory layers and relationships at a glance
+- **Local storage, privacy-safe**: SQLite by default, data never leaves the device, supports one-click import/export
+
+> For detailed documentation, see [ClawXMemory README](https://github.com/OpenBMB/ClawXMemory).
+
+---
+
+## 🔌 ClawXRouter — Edge-Cloud Collaborative Routing Plugin
+
+[ClawXRouter](https://github.com/openbmb/clawxrouter) is EdgeClaw's routing brain — the edge perceives data attributes (sensitivity, complexity) while the cloud handles reasoning and generation. Through its Hook mechanism, it automatically intercepts and routes without any changes to business code, serving as a seamless drop-in replacement for OpenClaw.
+
+### Cost-Aware Routing (Token-Saver)
+
+Most requests involve browsing files, reading code, and simple Q&A — using the most expensive model for these tasks is pure waste. Token-Saver uses LLM-as-Judge to classify requests by complexity, automatically routing them to the most economical model:
+
+| Complexity    | Task Examples                                             | Default Target Model |
+| ------------- | --------------------------------------------------------- | -------------------- |
+| **SIMPLE**    | Queries, translation, formatting, greetings               | `gpt-4o-mini`        |
+| **MEDIUM**    | Code generation, single-file editing, email drafting      | `gpt-4o`             |
+| **COMPLEX**   | System design, multi-file refactoring, cross-doc analysis | `claude-sonnet-4.6`  |
+| **REASONING** | Mathematical proofs, formal logic, experiment design      | `o4-mini`            |
+
+| Approach         | Pros                                     | Cons                                                |
+| ---------------- | ---------------------------------------- | --------------------------------------------------- |
+| Keyword Rules    | Fast                                     | No semantic understanding, high false-positive rate |
+| **LLM-as-Judge** | **Semantic understanding, multilingual** | One additional local model call (~1–2s)             |
+
+The Judge runs on a local small model (MiniCPM-4.1 / Qwen3.5), with prompt hash caching (SHA-256, TTL 5 min) to avoid re-judging identical requests. In typical workflows, **60–80% of requests** are forwarded to cheaper models.
+
+### Three-Tier Security Collaboration (Privacy Router)
+
+Every message, tool call, and tool result is inspected in real time and automatically classified into three levels:
 
 | Level  | Meaning   | Routing Strategy                  | Example                          |
 | ------ | --------- | --------------------------------- | -------------------------------- |
@@ -73,55 +174,21 @@ Every user message, tool call, and tool result is inspected in real time and aut
 | **S2** | Sensitive | Desensitize then forward to cloud | Addresses, phone numbers, emails |
 | **S3** | Private   | Process locally only              | Pay slips, passwords, SSH keys   |
 
-### Dual Detection Engines
+**Dual Detection Engines**: Rule detector (keywords + regex, ~0ms) + Local LLM detector (semantic understanding, ~1–2s) — the two can be combined and stacked.
 
-| Engine                 | Mechanism                                            | Latency | Coverage                                                                             |
-| ---------------------- | ---------------------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
-| **Rule Detector**      | Keywords + Regex matching                            | ~0ms    | Known patterns: API keys, DB connection strings, PEM key headers                     |
-| **Local LLM Detector** | Semantic understanding (runs on a local small model) | ~1–2s   | Contextual reasoning: "Analyze this pay slip for me", addresses in various languages |
-
-The two engines can be stacked and combined, flexibly enabled per scenario via the `checkpoints` configuration.
-
-### S2 Data Flow: Desensitized Forwarding
+**S2 Desensitized Forwarding**:
 
 ```
-User Message (containing PII)
-    │
-    ▼
-Local LLM Detection → S2
-    │
-    ▼
-Local LLM Extracts PII → JSON Array
-    │
-    ▼
-Programmatic PII Replacement → [REDACTED:PHONE], [REDACTED:ADDRESS]
-    │
-    ▼
-Privacy Proxy (localhost:8403)
-    ├── Strips PII markers
-    ├── Forwards to cloud model
-    └── Passes through response (supports SSE streaming)
+User Message (containing PII) → Local LLM Detection → S2 → Extract PII → Replace with [REDACTED:*]
+    → Privacy Proxy → Strip markers → Forward to cloud → Pass through SSE response
 ```
 
-### S3 Data Flow: Fully Local Processing
+**S3 Fully Local**: Forwarded to the local Guard Agent (Ollama / vLLM); cloud-side history only receives a placeholder.
+
+**Dual-Track Memory & Dual-Track Sessions**:
 
 ```
-User Message (containing private data)
-    │
-    ▼
-Detection → S3
-    │
-    ▼
-Forward to Local Guard Agent
-    ├── Uses local LLM (Ollama / vLLM)
-    ├── Full data visible, entirely local inference
-    └── Cloud-side history only receives 🔒 placeholder
-```
-
-### Dual-Track Memory & Dual-Track Sessions
-
-```
-~/.openclaw/workspace/
+~/.edgeclaw/workspace/
 ├── MEMORY.md           ← What the cloud model sees (auto-desensitized)
 ├── MEMORY-FULL.md      ← What the local model sees (complete data)
 │
@@ -132,53 +199,9 @@ agents/{id}/sessions/
 
 The cloud model **never sees** `MEMORY-FULL.md` or `sessions/full/` — the Hook system intercepts at the file access layer.
 
-### Security Guarantees
+### Composable Router Pipeline
 
-**Theorem 1 (Cloud-Side Invisibility)**: For any S3-level data _x_, its original content is completely invisible to the cloud:
-
-∀ _x_, Detect(_x_) = S₃ ⟹ _x_ ∉ Cloud(_x_)
-
-**Theorem 2 (Desensitization Completeness)**: For any S2-level data _x_, the cloud-visible form contains none of the original privacy entity values:
-
-∀ _x_, Detect(_x_) = S₂ ⟹ ∀ (_ti_, _vi_) ∈ Extract(_x_), _vi_ ∉ Cloud(_x_)
-
----
-
-## 💰 Feature Two: Cost-Aware Collaboration
-
-### Why Cost-Aware Collaboration?
-
-In a typical AI coding assistant workflow, most requests involve browsing files, reading code, and simple Q&A — using the most expensive model for these tasks is pure waste. Cost-Aware Collaboration uses a local small model as an LLM-as-Judge, classifying requests by complexity and routing them to cloud models at different price tiers.
-
-| Complexity    | Task Examples                                                  | Default Target Model |
-| ------------- | -------------------------------------------------------------- | -------------------- |
-| **SIMPLE**    | Queries, translation, formatting, greetings                    | `gpt-4o-mini`        |
-| **MEDIUM**    | Code generation, single-file editing, email drafting           | `gpt-4o`             |
-| **COMPLEX**   | System design, multi-file refactoring, cross-document analysis | `claude-sonnet-4.6`  |
-| **REASONING** | Mathematical proofs, formal logic, experiment design           | `o4-mini`            |
-
-### Why LLM-as-Judge Instead of Keyword Rules?
-
-| Approach         | Pros                                     | Cons                                                |
-| ---------------- | ---------------------------------------- | --------------------------------------------------- |
-| Keyword Rules    | Fast                                     | No semantic understanding, high false-positive rate |
-| **LLM-as-Judge** | **Semantic understanding, multilingual** | One additional local model call (~1–2s)             |
-
-The Judge runs on a local small model (e.g., MiniCPM-4.1 / Qwen3.5), with latency of approximately 1–2 seconds.
-
-### Smart Caching
-
-Prompt hash caching (SHA-256, TTL 5 minutes) — identical requests are not re-judged, further reducing latency overhead.
-
-### How Much Do You Save?
-
-In a typical coding assistant workflow, Cost-Aware Collaboration can route **60–80% of requests** to cheaper models.
-
----
-
-## 🚀 Composable Router Pipeline
-
-Security collaboration and cost-aware collaboration run in the **same pipeline**, working together via weights and a two-phase short-circuit strategy:
+The security router and cost-aware router run in the **same pipeline**, working together via weights and a two-phase short-circuit strategy:
 
 ```
 User Message
@@ -187,27 +210,17 @@ User Message
 RouterPipeline.run()
     │
     ├── Phase 1: Fast routers (weight ≥ 50) run in parallel
-    │       └── security router → three-tier sensitivity detection
+    │       └── privacy router → three-tier sensitivity detection
     │
     ├── Short-circuit: If Phase 1 detects sensitive data → skip Phase 2
     │
     └── Phase 2: Slow routers (weight < 50) run on demand
-            └── cost-aware router → LLM Judge task complexity classification
+            └── token-saver → LLM Judge complexity classification
 ```
 
-**Design Philosophy**: Security first — the security router runs first with high weight. If sensitive data is found, it short-circuits immediately without wasting time on complexity judgment. Cost-aware collaboration kicks in only after the security check passes (S1).
+Security first — the security router runs first with high weight. If sensitive data is found, it short-circuits immediately. Cost-aware routing kicks in only after the security check passes (S1).
 
-### End-to-End Pipeline Formalization
-
-```
-                                                    ⎧ θ_cloud(m)        if a = passthrough
-m ─[c_msg]→ Detect(m) → l ─[c_route]→ R(l) → a → ⎨ θ_cloud(De(m))    if a = desensitize
-                                                    ⎩ θ_local(m)        if a = redirect
-
-  ─[c_persist]→ W(m, l) ─[c_end]→ Sync
-```
-
-### 10 Hooks Covering the Complete Lifecycle
+### 13 Hooks Covering the Complete Lifecycle
 
 | Hook                   | Trigger Point              | Core Responsibility                         |
 | ---------------------- | -------------------------- | ------------------------------------------- |
@@ -222,147 +235,34 @@ m ─[c_msg]→ Detect(m) → l ─[c_route]→ R(l) → a → ⎨ θ_cloud(De(m
 | `before_agent_start`   | Before sub-agent starts    | Task content guard                          |
 | `message_received`     | Message received           | Observability logging                       |
 
----
+> For detailed documentation, see [ClawXRouter README](https://github.com/openbmb/clawxrouter).
 
-## 📦 Installation
+### Usage Modes
 
-We provide two installation methods: from source (recommended) and local LLM environment setup.
+**Mode 1: Token-Saver Cost-Saving Mode (Default)** — Fill in your API Key and it's ready to use. ClawXRouter automatically routes requests to the most economical model. Tiers can be customized in `openclaw.json` or via the Dashboard.
 
-### Method 1: Install from Source
-
-```bash
-git clone https://github.com/openbmb/edgeclaw.git
-cd edgeclaw
-
-pnpm install
-pnpm build
-pnpm ui:build
-pnpm openclaw onboard --install-daemon
-```
-
-### Method 2: Local LLM Environment
-
-EdgeClaw requires a local inference backend for privacy detection and the Guard Agent. We recommend Ollama:
-
-```bash
-# macOS
-brew install ollama
-
-# Linux
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# Pull the recommended model
-ollama pull openbmb/minicpm4.1
-
-# Start the service
-ollama serve
-```
-
-All OpenAI-compatible APIs are also supported, including vLLM, LMStudio, SGLang, TGI, etc. See `config.example.json` for backend configuration examples.
-
-### Verify Installation
-
-```bash
-pnpm openclaw gateway run
-```
-
-If you see the GuardClaw plugin loading logs, the installation was successful.
-
----
-
-## 🚀 Quick Start
-
-### 1. Enable the GuardClaw Plugin
-
-Add the following to `openclaw.json`:
-
-```json
-{
-  "plugins": {
-    "entries": {
-      "guardclaw": {
-        "enabled": true,
-        "config": {
-          "privacy": {
-            "enabled": true,
-            "localModel": {
-              "enabled": true,
-              "provider": "ollama",
-              "model": "openbmb/minicpm4.1",
-              "endpoint": "http://localhost:11434"
-            },
-            "guardAgent": {
-              "id": "guard",
-              "workspace": "~/.openclaw/workspace-guard",
-              "model": "ollama/openbmb/minicpm4.1"
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-### 2. Configure the Guard Agent
-
-Register the Guard Agent in the `agents` section of `openclaw.json`:
-
-```json
-{
-  "agents": {
-    "list": [
-      {
-        "id": "main",
-        "workspace": "~/.openclaw/workspace-main",
-        "subagents": { "allowAgents": ["guard"] }
-      },
-      {
-        "id": "guard",
-        "workspace": "~/.openclaw/workspace-guard",
-        "model": "ollama/openbmb/minicpm4.1"
-      }
-    ]
-  }
-}
-```
-
-### 3. Launch
-
-```bash
-pnpm openclaw gateway run
-```
-
-EdgeClaw automatically intercepts and routes — no modifications to any business logic required.
-
-### 4. (Optional) Enable Cost-Aware Collaboration
-
-Enable it in `privacy.routers`:
+**Mode 2: Privacy + Cost-Saving Dual Routing** — Enable the privacy router in `~/.edgeclaw/clawxrouter.json`; requires a local LLM backend (Ollama / vLLM):
 
 ```json
 {
   "privacy": {
     "routers": {
-      "token-saver": {
-        "enabled": true,
-        "weight": 30,
-        "options": {
-          "tiers": {
-            "SIMPLE": { "provider": "openai", "model": "gpt-4o-mini" },
-            "MEDIUM": { "provider": "openai", "model": "gpt-4o" },
-            "COMPLEX": { "provider": "anthropic", "model": "claude-sonnet-4.6" },
-            "REASONING": { "provider": "openai", "model": "o4-mini" }
-          }
-        }
-      }
+      "privacy": { "enabled": true, "type": "builtin", "weight": 90 },
+      "token-saver": { "enabled": true, "type": "builtin", "weight": 40 }
+    },
+    "pipeline": {
+      "onUserMessage": ["privacy", "token-saver"],
+      "onToolCallProposed": ["privacy"],
+      "onToolCallExecuted": ["privacy"]
+    },
+    "localModel": {
+      "enabled": true,
+      "endpoint": "http://localhost:11434",
+      "model": "openbmb/minicpm4.1"
     }
   }
 }
 ```
-
----
-
-## 🎬 Demo
 
 ---
 
@@ -407,7 +307,7 @@ Enable it in `privacy.routers`:
 
 ### Custom Routers
 
-The EdgeClaw collaboration pipeline is fully extensible — implement the `GuardClawRouter` interface to inject custom collaboration logic:
+The ClawXRouter pipeline is fully extensible — implement the `GuardClawRouter` interface to inject custom routing logic:
 
 ```typescript
 const myRouter: GuardClawRouter = {
@@ -446,7 +346,7 @@ const myRouter: GuardClawRouter = {
 
 ### Prompt Customization
 
-Edit the Markdown files under `extensions/guardclaw/prompts/` to adjust behavior — no code changes needed:
+Edit the Markdown files under `extensions/clawxrouter/prompts/` to adjust behavior — no code changes needed:
 
 | File                    | Purpose                        |
 | ----------------------- | ------------------------------ |
@@ -470,38 +370,46 @@ Custom presets for Ollama, LMStudio, SGLang, and other backends are also support
 ## 🏗️ Code Structure
 
 ```
-extensions/guardclaw/
-├── index.ts                    # Plugin entry point
-├── openclaw.plugin.json        # Plugin metadata
-├── config.example.json         # Configuration example
+EdgeClaw/
+├── openclaw.mjs                         # CLI entry point
+├── src/config/
+│   ├── edgeclaw-defaults.ts             # EdgeClaw default config template (auto-seed)
+│   ├── paths.ts                         # State directory / port resolution (18790)
+│   └── io.ts                            # Config loading (with auto-seed logic)
+├── scripts/
+│   ├── deploy-edgeclaw.sh               # One-click deployment script
+│   └── lib/optional-bundled-clusters.mjs # Build exclusion list (guardclaw)
 │
-├── src/
-│   ├── detector.ts             # Detection engine (coordinates dual detectors)
-│   ├── rules.ts                # Rule detector (keywords + regex)
-│   ├── local-model.ts          # Local LLM detector + desensitization engine
-│   ├── router-pipeline.ts      # Router pipeline (two-phase + weighted merge)
-│   ├── hooks.ts                # 10 Hooks
-│   ├── privacy-proxy.ts        # HTTP privacy proxy
-│   ├── guard-agent.ts          # Guard Agent management
-│   ├── session-state.ts        # Session privacy state
-│   ├── session-manager.ts      # Dual-track session history
-│   ├── memory-isolation.ts     # Dual-track memory management
-│   └── routers/
-│       ├── privacy.ts          # Privacy router (security)
-│       └── token-saver.ts      # Cost-Aware router (cost savings)
+├── extensions/
+│   ├── clawxrouter/                     # [Built-in] ClawXRouter cost-saving router
+│   │   ├── index.ts                     # Plugin entry point
+│   │   ├── src/
+│   │   │   ├── router-pipeline.ts       # Router pipeline (two-phase + weighted merge)
+│   │   │   ├── hooks.ts                 # 13 Hooks
+│   │   │   ├── privacy-proxy.ts         # HTTP privacy proxy
+│   │   │   ├── config-schema.ts         # Default config schema
+│   │   │   ├── live-config.ts           # Config hot-reload
+│   │   │   ├── stats-dashboard.ts       # Visual Dashboard
+│   │   │   └── routers/
+│   │   │       ├── privacy.ts           # Privacy router (security)
+│   │   │       └── token-saver.ts       # Cost-aware router (cost savings)
+│   │   └── prompts/                     # Customizable prompt templates
+│   │
+│   ├── openbmb-clawxmemory/             # [Built-in] ClawXMemory long-term memory
+│   │   ├── src/
+│   │   │   ├── index.ts                 # Plugin entry point
+│   │   │   ├── core/                    # L0/L1/L2 three-layer memory engine
+│   │   │   └── tools.ts                 # memory_overview / memory_list / memory_flush
+│   │   └── ui-source/                   # Dashboard frontend
+│   │
+│   └── guardclaw/                       # [Optional] Privacy guard (excluded from build by default)
 │
-├── prompts/                    # Customizable prompt templates
-│   ├── detection-system.md
-│   ├── guard-agent-system.md
-│   └── token-saver-judge.md
-│
-└── test/                       # Test suite
-    ├── rules.test.ts
-    ├── detector.test.ts
-    ├── router-pipeline.test.ts
-    ├── token-saver.test.ts
-    ├── privacy-proxy.test.ts
-    └── integration.test.ts
+└── ~/.edgeclaw/                         # Runtime state directory (auto-generated)
+    ├── openclaw.json                    # Main config (auto-seeded on first launch)
+    ├── clawxrouter.json                 # ClawXRouter config (auto-generated)
+    ├── clawxrouter-stats.json           # Token statistics
+    ├── clawxmemory/                     # ClawXMemory SQLite data
+    └── workspace-main/                  # Agent workspace
 ```
 
 ---
@@ -533,6 +441,11 @@ If this project is helpful to your research or work, please give us a ⭐!
 - [OpenClaw](https://github.com/openclaw/openclaw) — Base AI assistant framework
 - [MiniCPM](https://github.com/OpenBMB/MiniCPM) — Recommended local detection model
 - [Ollama](https://ollama.ai) — Recommended local inference backend
+
+### Ecosystem Projects
+
+- [ClawXRouter](https://github.com/openbmb/clawxrouter) — Edge-Cloud collaborative routing plugin (privacy routing + cost-aware routing + Dashboard)
+- [ClawXMemory](https://github.com/OpenBMB/ClawXMemory) — Multi-layered memory system for long-term context
 
 ### License
 
