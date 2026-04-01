@@ -9,6 +9,8 @@ Edge-Cloud Collaborative AI Agent
 
 【**[中文](./readme_zh.md)** | English】
 
+👋 Join our community for discussion and support!
+
 <a href="./assets/feishu-group.png"><img src="./assets/feishu-logo.png" width="16" height="16"> Feishu</a> &nbsp;|&nbsp; <a href="https://discord.com/invite/pC3N7ezpw"><img src="./assets/discord-logo.png" width="16" height="16"> Discord</a>
 
 </div>

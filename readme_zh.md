@@ -9,6 +9,8 @@
 
 【中文 | **[English](./README.md)**】
 
+👋 欢迎加入我们的社群交流讨论！
+
 <a href="./assets/feishu-group.png"><img src="./assets/feishu-logo.png" width="16" height="16"> 飞书</a> &nbsp;|&nbsp; <a href="https://discord.com/invite/pC3N7ezpw"><img src="./assets/discord-logo.png" width="16" height="16"> Discord</a>
 
 </div>
