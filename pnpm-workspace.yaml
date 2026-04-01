@@ -4,7 +4,7 @@ packages:
   - packages/*
   - extensions/*
 
-minimumReleaseAge: 2880
+minimumReleaseAge: 0
 
 minimumReleaseAgeExclude:
   - "openclaw"
@@ -12,6 +12,9 @@ minimumReleaseAgeExclude:
   - "@typescript/native-preview*"
   - "@oxlint/*"
   - "@oxfmt/*"
+  - "oxfmt"
+  - "oxlint"
+  - "@pierre/theme"
   - "sqlite-vec"
   - "sqlite-vec-*"
 

@@ -17,9 +17,9 @@ export function resolveIsNixMode(env: NodeJS.ProcessEnv = process.env): boolean 
 
 export const isNixMode = resolveIsNixMode();
 
-// Support the remaining legacy pre-rebrand state dir.
-const LEGACY_STATE_DIRNAMES = [".clawdbot"] as const;
-const NEW_STATE_DIRNAME = ".openclaw";
+// Support legacy state dirs so existing data is still discovered.
+const LEGACY_STATE_DIRNAMES = [".openclaw", ".clawdbot"] as const;
+const NEW_STATE_DIRNAME = ".edgeclaw";
 const CONFIG_FILENAME = "openclaw.json";
 const LEGACY_CONFIG_FILENAMES = ["clawdbot.json"] as const;
 
@@ -201,6 +201,9 @@ export function resolveDefaultConfigCandidates(
     const resolved = resolveUserPath(openclawStateDir, env, effectiveHomedir);
     candidates.push(path.join(resolved, CONFIG_FILENAME));
     candidates.push(...LEGACY_CONFIG_FILENAMES.map((name) => path.join(resolved, name)));
+    // When OPENCLAW_STATE_DIR is explicitly set, only look there — do not
+    // fall through to default dirs (prevents picking up a sibling instance's config).
+    return candidates;
   }
 
   const defaultDirs = [newStateDir(effectiveHomedir), ...legacyStateDirs(effectiveHomedir)];
@@ -211,7 +214,7 @@ export function resolveDefaultConfigCandidates(
   return candidates;
 }
 
-export const DEFAULT_GATEWAY_PORT = 18789;
+export const DEFAULT_GATEWAY_PORT = 18790;
 
 /**
  * Gateway lock directory (ephemeral).

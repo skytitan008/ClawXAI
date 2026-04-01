@@ -3,6 +3,7 @@ export const optionalBundledClusters = [
   "diagnostics-otel",
   "diffs",
   "googlechat",
+  "guardclaw",
   "matrix",
   "memory-lancedb",
   "msteams",
@@ -13,6 +14,10 @@ export const optionalBundledClusters = [
   "whatsapp",
   "zalouser",
 ];
+
+// Extensions excluded from EdgeClaw builds regardless of OPENCLAW_INCLUDE_OPTIONAL_BUNDLED.
+// GuardClaw is replaced by ClawXRouter (token-saver) in EdgeClaw.
+export const excludedBundledClusters = new Set(["guardclaw"]);
 
 export const optionalBundledClusterSet = new Set(optionalBundledClusters);
 
@@ -36,6 +41,9 @@ export function hasReleasedBundledInstall(packageJson) {
 }
 
 export function shouldBuildBundledCluster(cluster, env = process.env, options = {}) {
+  if (excludedBundledClusters.has(cluster)) {
+    return false;
+  }
   if (hasReleasedBundledInstall(options.packageJson)) {
     return true;
   }

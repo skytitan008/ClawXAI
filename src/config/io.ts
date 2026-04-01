@@ -17,6 +17,7 @@ import { sanitizeTerminalText } from "../terminal/safe-text.js";
 import { VERSION } from "../version.js";
 import { DuplicateAgentDirError, findDuplicateAgentDirs } from "./agent-dirs.js";
 import { maintainConfigBackups } from "./backup-rotation.js";
+import { generateEdgeClawDefaults } from "./edgeclaw-defaults.js";
 import { restoreEnvVarRefs } from "./env-preserve.js";
 import {
   type EnvSubstitutionWarning,
@@ -51,6 +52,31 @@ import { shouldWarnOnTouchedVersion } from "./version.js";
 // Re-export for backwards compatibility
 export { CircularIncludeError, ConfigIncludeError } from "./includes.js";
 export { MissingEnvVarError } from "./env-substitution.js";
+
+/**
+ * Seed an EdgeClaw default config when no openclaw.json exists.
+ * Always generates the full config skeleton (providers, plugins, tiers).
+ * If EDGECLAW_API_KEY is set, API keys are filled in; otherwise they
+ * are left as empty strings for the user to fill via config or Dashboard.
+ */
+function seedEdgeClawDefaults(
+  configPath: string,
+  env: NodeJS.ProcessEnv,
+  fsImpl: typeof fs,
+): { parsed: OpenClawConfig; raw: string | null; seeded: boolean } {
+  try {
+    const defaults = generateEdgeClawDefaults(env);
+    const apiKey = env.EDGECLAW_API_KEY?.trim() ?? "";
+    const raw = JSON.stringify(defaults, null, 2).replace(/\$\{EDGECLAW_API_KEY\}/g, apiKey);
+    const dir = path.dirname(configPath);
+    fsImpl.mkdirSync(dir, { recursive: true });
+    fsImpl.writeFileSync(configPath, raw, "utf-8");
+    const parsed = JSON.parse(raw) as OpenClawConfig;
+    return { parsed, raw, seeded: true };
+  } catch {
+    return { parsed: {} as OpenClawConfig, raw: null, seeded: false };
+  }
+}
 
 const SHELL_ENV_EXPECTED_KEYS = [
   "OPENAI_API_KEY",
@@ -1884,16 +1910,21 @@ export function createConfigIO(overrides: ConfigIoDeps = {}) {
     maybeLoadDotEnvForConfig(deps.env);
     const exists = deps.fs.existsSync(configPath);
     if (!exists) {
-      const hash = hashConfigRaw(null);
-      const config = materializeRuntimeConfig({}, "missing");
+      // Seed EdgeClaw defaults on first run and persist to disk.
+      const seedConfig = seedEdgeClawDefaults(configPath, deps.env, deps.fs);
+      const hash = hashConfigRaw(seedConfig.raw);
+      const config = materializeRuntimeConfig(
+        seedConfig.parsed,
+        seedConfig.seeded ? "load" : "missing",
+      );
       const legacyIssues: LegacyConfigIssue[] = [];
       return await finalizeReadConfigSnapshotInternalResult(deps, {
         snapshot: createConfigFileSnapshot({
           path: configPath,
-          exists: false,
-          raw: null,
-          parsed: {},
-          sourceConfig: {},
+          exists: seedConfig.seeded,
+          raw: seedConfig.raw,
+          parsed: seedConfig.parsed,
+          sourceConfig: seedConfig.parsed,
           valid: true,
           runtimeConfig: config,
           hash,

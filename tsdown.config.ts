@@ -166,6 +166,11 @@ export default defineConfig([
     deps: {
       neverBundle: [
         "@lancedb/lancedb",
+        "@lancedb/lancedb-darwin-arm64",
+        "@lancedb/lancedb-darwin-x64",
+        "@lancedb/lancedb-linux-arm64-gnu",
+        "@lancedb/lancedb-linux-x64-gnu",
+        "@lancedb/lancedb-win32-x64-msvc",
         "@matrix-org/matrix-sdk-crypto-nodejs",
         "matrix-js-sdk",
         ...bundledPluginRuntimeDependencies,
