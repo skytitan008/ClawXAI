@@ -308,3 +308,6 @@ export default createClawXAIRouter;
 
 // 导出 LLM Judge
 export { LLMComplexityJudge, createLLMJudge, type LLMJudgeConfig, type LLMJudgeResult } from './llm-judge';
+
+// 导出 Pipeline
+export { RouterPipeline, createRouterPipeline, type RouterPipelineConfig, type PipelineResult } from './pipeline';
