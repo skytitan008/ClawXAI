@@ -36,8 +36,8 @@ export class ClawAIEngine {
   private channels: Map<string, ChannelAdapter>;
 
   constructor(config: ClawAIConfig) {
-    this.router = config.router || (await import('@claw-ai/router')).createClawAIRouter();
-    this.memory = config.memory || (await import('@claw-ai/memory')).createClawAIMemory();
+    this.router = config.router || createClawAIRouter();
+    this.memory = config.memory || createClawAIMemory();
     this.channels = new Map();
   }
 
