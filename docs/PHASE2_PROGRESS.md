@@ -61,7 +61,7 @@ export class TokenSaverRouter implements Router {
 #### 测试结果
 
 ```bash
-🧪 Running ClawAI Tests...
+🧪 Running ClawXAI Tests...
 
 Test 3: Cost Routing (SIMPLE)
 [TokenSaverRouter] LLM judged: SIMPLE

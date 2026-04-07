@@ -1,7 +1,7 @@
 /**
- * ClawAI Router - 融合 EdgeClaw ClawXRouter 的隐私和成本优化路由
+ * ClawXAI Router - 融合 EdgeClaw ClawXRouter 的隐私和成本优化路由
  * 
- * @module @claw-ai/router
+ * @module @clawxai/router
  */
 
 import { defaultPrivacyRules, type PrivacyRules } from './privacy-rules';
@@ -273,9 +273,9 @@ export class RouterPipeline implements Router {
 }
 
 /**
- * 创建默认 ClawAI 路由器
+ * 创建默认 ClawXAI 路由器
  */
-export function createClawAIRouter(): RouterPipeline {
+export function createClawXAIRouter(): RouterPipeline {
   const pipeline = new RouterPipeline();
 
   // 注册隐私路由器 (高权重，安全优先)
@@ -304,4 +304,4 @@ export interface TokenSaverConfig {
 }
 
 // 导出默认
-export default createClawAIRouter;
+export default createClawXAIRouter;

@@ -1,8 +1,8 @@
 {
-  "name": "claw-ai-gateway",
+  "name": "clawxai-gateway",
   "version": "0.1.0",
   "private": true,
-  "description": "ClawAI Gateway Application",
+  "description": "ClawXAI Gateway Application",
   "type": "module",
   "scripts": {
     "dev": "node gateway.mjs",
@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@claw-ai/core": "workspace:*",
-    "@claw-ai/router": "workspace:*",
-    "@claw-ai/memory": "workspace:*"
+    "@clawxai/core": "workspace:*",
+    "@clawxai/router": "workspace:*",
+    "@clawxai/memory": "workspace:*"
   }
 }

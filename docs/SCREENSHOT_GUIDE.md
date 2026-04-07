@@ -231,7 +231,7 @@ graph LR
 ## 📁 文件组织
 
 ```
-claw-ai/
+ClawXAI/
 ├── docs/
 │   ├── screenshots/          # 截图文件
 │   │   ├── v0.1.0/

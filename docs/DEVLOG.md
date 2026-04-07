@@ -1,4 +1,4 @@
-# 📔 ClawAI 开发日志
+# 📔 ClawXAI 开发日志
 
 ## 2026-04-07 - 项目启动日 🎉
 
@@ -12,20 +12,20 @@
 
 #### 2. 核心包开发 ✅
 
-**@claw-ai/router** (6,930 字节)
+**@ClawXAI/router** (6,930 字节)
 - PrivacyRouter: S1/S2/S3 三级隐私检测
 - TokenSaverRouter: 成本感知路由
 - RouterPipeline: 可组合的路由管线
 - 权重系统：安全优先，成本优化
 
-**@claw-ai/memory** (11,007 字节)
+**@ClawXAI/memory** (11,007 字节)
 - SimpleMemoryRepository: 内存存储实现
-- ClawAIMemory: 三层记忆系统
+- ClawXAIMemory: 三层记忆系统
 - L0/L1/L2 检索逻辑
 - 记忆构建和提取
 
-**@claw-ai/core** (4,176 字节)
-- ClawAIEngine: 核心引擎
+**@ClawXAI/core** (4,176 字节)
+- ClawXAIEngine: 核心引擎
 - 消息处理流程
 - 渠道适配器接口
 
@@ -48,7 +48,7 @@
 ### 测试结果
 
 ```bash
-🧪 Running ClawAI Tests...
+🧪 Running ClawXAI Tests...
 
 Test 1: Privacy Detection (S3) ✅ PASS
 Test 2: Privacy Detection (S2) ✅ PASS

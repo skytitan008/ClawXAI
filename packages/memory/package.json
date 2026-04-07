@@ -1,8 +1,8 @@
 {
-  "name": "@claw-ai/memory",
+  "name": "@clawxai/memory",
   "version": "0.1.0",
   "private": true,
-  "description": "ClawAI memory - L0/L1/L2 layered memory system (from EdgeClaw)",
+  "description": "ClawXAI memory - L0/L1/L2 layered memory system (from EdgeClaw)",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -1,13 +1,13 @@
 {
-  "name": "claw-ai",
+  "name": "ClawXAI",
   "version": "0.1.0",
   "private": true,
-  "description": "ClawAI - 全渠道 + 情感化 + 隐私保护 + 成本优化的终极 AI 助手",
-  "author": "ClawAI Team",
+  "description": "ClawXAI - 全渠道 + 情感化 + 隐私保护 + 成本优化的终极 AI 助手",
+  "author": "ClawXAI Team",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/claw-ai/claw-ai.git"
+    "url": "https://github.com/ClawXAI/ClawXAI.git"
   },
   "keywords": [
     "ai",
@@ -24,8 +24,8 @@
     "dev": "pnpm run dev:gateway",
     "dev:gateway": "node openclaw.mjs gateway run --watch",
     "build": "pnpm run build:core && pnpm run build:apps",
-    "build:core": "pnpm -r --filter '@claw-ai/*' run build",
-    "build:apps": "pnpm -r --filter 'claw-ai-app-*' run build",
+    "build:core": "pnpm -r --filter '@clawxai/*' run build",
+    "build:apps": "pnpm -r --filter 'ClawXAI-app-*' run build",
     "test": "pnpm -r run test",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",

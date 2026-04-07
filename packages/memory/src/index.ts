@@ -1,7 +1,7 @@
 /**
- * ClawAI Memory - 融合 EdgeClaw ClawXMemory 的三层记忆系统
+ * ClawXAI Memory - 融合 EdgeClaw ClawXMemory 的三层记忆系统
  * 
- * @module @claw-ai/memory
+ * @module @clawxai/memory
  */
 
 export type MemoryLevel = 'L0' | 'L1' | 'L2';
@@ -244,9 +244,9 @@ export class SimpleMemoryRepository implements MemoryRepository {
 }
 
 /**
- * ClawAI Memory - 三层记忆系统
+ * ClawXAI Memory - 三层记忆系统
  */
-export class ClawAIMemory {
+export class ClawXAIMemory {
   private repository: MemoryRepository;
 
   constructor(repository?: MemoryRepository) {
@@ -257,25 +257,25 @@ export class ClawAIMemory {
    * 记忆检索 - 沿"记忆树"推理导航
    */
   async retrieve(query: string, context: RetrievalContext = {}): Promise<RetrievalResult> {
-    console.log(`[ClawAIMemory] Retrieving for: "${query}"`);
+    console.log(`[ClawXAIMemory] Retrieving for: "${query}"`);
 
     // Step 1: 先从高层记忆 (L2) 评估相关性
     const l2Results = await this.retrieveL2(query, context);
     if (l2Results.confidence > 0.8) {
-      console.log(`[ClawAIMemory] Found high-confidence L2 memory`);
+      console.log(`[ClawXAIMemory] Found high-confidence L2 memory`);
       return l2Results;
     }
 
     // Step 2: 向下钻取 L1 记忆片段
     const l1Results = await this.retrieveL1(query, l2Results.relatedTopics || []);
     if (l1Results.confidence > 0.7) {
-      console.log(`[ClawAIMemory] Found relevant L1 memory`);
+      console.log(`[ClawXAIMemory] Found relevant L1 memory`);
       return l1Results;
     }
 
     // Step 3: 追溯到具体对话 (L0)
     const l0Results = await this.retrieveL0(l1Results.fragments || []);
-    console.log(`[ClawAIMemory] Retrieved from L0 raw conversations`);
+    console.log(`[ClawXAIMemory] Retrieved from L0 raw conversations`);
     
     return l0Results;
   }
@@ -354,7 +354,7 @@ export class ClawAIMemory {
   }
 
   private async handleConversationEnd(event: ConversationEndEvent): Promise<void> {
-    console.log(`[ClawAIMemory] Conversation ended, extracting L1 memory`);
+    console.log(`[ClawXAIMemory] Conversation ended, extracting L1 memory`);
 
     // 提取关键信息
     const topics = event.metadata.topics || this.extractTopics(event.messages);
@@ -420,11 +420,11 @@ export interface MemoryDashboard {
 }
 
 /**
- * 创建默认 ClawAI 记忆系统
+ * 创建默认 ClawXAI 记忆系统
  */
-export function createClawAIMemory(): ClawAIMemory {
-  return new ClawAIMemory(new SimpleMemoryRepository());
+export function createClawXAIMemory(): ClawXAIMemory {
+  return new ClawXAIMemory(new SimpleMemoryRepository());
 }
 
 // 导出默认
-export default createClawAIMemory;
+export default createClawXAIMemory;

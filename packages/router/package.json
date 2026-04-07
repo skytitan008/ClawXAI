@@ -1,8 +1,8 @@
 {
-  "name": "@claw-ai/router",
+  "name": "@clawxai/router",
   "version": "0.1.0",
   "private": true,
-  "description": "ClawAI router - Privacy + Cost optimization (from EdgeClaw)",
+  "description": "ClawXAI router - Privacy + Cost optimization (from EdgeClaw)",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

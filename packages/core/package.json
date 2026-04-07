@@ -1,8 +1,8 @@
 {
-  "name": "@claw-ai/core",
+  "name": "@clawxai/core",
   "version": "0.1.0",
   "private": true,
-  "description": "ClawAI core engine based on OpenClaw",
+  "description": "ClawXAI core engine based on OpenClaw",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,8 +28,8 @@
     "clean": "rm -rf dist/"
   },
   "dependencies": {
-    "@claw-ai/router": "workspace:*",
-    "@claw-ai/memory": "workspace:*"
+    "@clawxai/router": "workspace:*",
+    "@clawxai/memory": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

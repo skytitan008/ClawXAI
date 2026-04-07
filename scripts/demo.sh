@@ -95,9 +95,9 @@ echo -e "${CYAN}Command: node apps/gateway/gateway.mjs (interactive)${NC}"
 echo ""
 echo "Memory Dashboard:"
 node -e "
-const { createClawAIMemory } = require('./packages/memory/dist/index.js');
+const { createClawXAIMemory } = require('./packages/memory/dist/index.js');
 async function show() {
-  const memory = createClawAIMemory();
+  const memory = createClawXAIMemory();
   const dashboard = await memory.getDashboardData();
   console.log('Total Memories:', dashboard.overview.total);
   console.log('L0:', dashboard.overview.l0Count);

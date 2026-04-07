@@ -10,22 +10,22 @@ importers:
 
   apps/gateway:
     dependencies:
-      '@claw-ai/core':
+      '@clawxai/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@claw-ai/memory':
+      '@clawxai/memory':
         specifier: workspace:*
         version: link:../../packages/memory
-      '@claw-ai/router':
+      '@clawxai/router':
         specifier: workspace:*
         version: link:../../packages/router
 
   packages/core:
     dependencies:
-      '@claw-ai/memory':
+      '@clawxai/memory':
         specifier: workspace:*
         version: link:../memory
-      '@claw-ai/router':
+      '@clawxai/router':
         specifier: workspace:*
         version: link:../router
     devDependencies:

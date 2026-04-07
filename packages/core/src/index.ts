@@ -1,15 +1,15 @@
 /**
- * ClawAI Core - 基于 OpenClaw 的核心引擎
+ * ClawXAI Core - 基于 OpenClaw 的核心引擎
  * 
- * @module @claw-ai/core
+ * @module @clawxai/core
  */
 
-import type { Router, RouterDecision, DetectionContext } from '@claw-ai/router';
-import type { ClawAIMemory, MemoryEvent } from '@claw-ai/memory';
+import type { Router, RouterDecision, DetectionContext } from '@clawxai/router';
+import type { ClawXAIMemory, MemoryEvent } from '@clawxai/memory';
 
-export interface ClawAIConfig {
+export interface ClawXAIConfig {
   router?: Router;
-  memory?: ClawAIMemory;
+  memory?: ClawXAIMemory;
   channels?: string[];
 }
 
@@ -28,16 +28,16 @@ export interface ConversationContext {
 }
 
 /**
- * ClawAI 核心引擎
+ * ClawXAI 核心引擎
  */
-export class ClawAIEngine {
+export class ClawXAIEngine {
   private router: Router;
-  private memory: ClawAIMemory;
+  private memory: ClawXAIMemory;
   private channels: Map<string, ChannelAdapter>;
 
-  constructor(config: ClawAIConfig) {
-    this.router = config.router || createClawAIRouter();
-    this.memory = config.memory || createClawAIMemory();
+  constructor(config: ClawXAIConfig) {
+    this.router = config.router || createClawXAIRouter();
+    this.memory = config.memory || createClawXAIMemory();
     this.channels = new Map();
   }
 
@@ -54,7 +54,7 @@ export class ClawAIEngine {
       workspaceId: context.workspaceId,
     });
 
-    console.log(`[ClawAI] Router decision: ${routerDecision.level} - ${routerDecision.action}`);
+    console.log(`[ClawXAI] Router decision: ${routerDecision.level} - ${routerDecision.action}`);
 
     // Step 2: 根据路由决策处理
     let response: Message;
@@ -81,7 +81,7 @@ export class ClawAIEngine {
 
   private async handleLocal(context: ConversationContext, message: Message): Promise<Message> {
     // 本地处理 (隐私敏感)
-    console.log('[ClawAI] Processing locally (privacy-sensitive)');
+    console.log('[ClawXAI] Processing locally (privacy-sensitive)');
     return {
       id: this.generateId(),
       role: 'assistant',
@@ -97,7 +97,7 @@ export class ClawAIEngine {
   ): Promise<Message> {
     // 云端处理 (成本优化)
     const target = decision.target!;
-    console.log(`[ClawAI] Routing to ${target.provider}/${target.model}`);
+    console.log(`[ClawXAI] Routing to ${target.provider}/${target.model}`);
     
     return {
       id: this.generateId(),
@@ -127,7 +127,7 @@ export class ClawAIEngine {
    */
   registerChannel(name: string, adapter: ChannelAdapter): void {
     this.channels.set(name, adapter);
-    console.log(`[ClawAI] Registered channel: ${name}`);
+    console.log(`[ClawXAI] Registered channel: ${name}`);
   }
 
   /**
@@ -147,12 +147,12 @@ export interface ChannelAdapter {
 }
 
 /**
- * 创建 ClawAI 引擎实例
+ * 创建 ClawXAI 引擎实例
  */
-export async function createClawAI(config: ClawAIConfig = {}): Promise<ClawAIEngine> {
-  const engine = new ClawAIEngine(config);
+export async function createClawXAI(config: ClawXAIConfig = {}): Promise<ClawXAIEngine> {
+  const engine = new ClawXAIEngine(config);
   return engine;
 }
 
 // 导出默认
-export default createClawAI;
+export default createClawXAI;

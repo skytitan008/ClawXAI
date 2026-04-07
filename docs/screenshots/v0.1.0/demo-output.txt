@@ -59,7 +59,7 @@
 
   Code Lines:     ~870
   Files:          22
-  Packages:       3 (@claw-ai/router, @claw-ai/memory, @claw-ai/core)
+  Packages:       3 (@ClawXAI/router, @ClawXAI/memory, @ClawXAI/core)
   Applications:   1 (gateway)
   Tests:          5/5 PASS
   Build Time:     ~1.5s

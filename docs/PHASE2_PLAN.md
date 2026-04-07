@@ -236,7 +236,7 @@ describe('PrivacyRouter', () => {
 // 示例：端到端路由测试
 describe('RouterPipeline E2E', () => {
   it('should route sensitive data locally', async () => {
-    const pipeline = createClawAIRouter();
+    const pipeline = createClawXAIRouter();
     const decision = await pipeline.detect({
       message: 'My password is secret123'
     });

@@ -43,22 +43,22 @@
   - TypeScript 配置
   - Git 仓库设置
   
-- **@claw-ai/router**
+- **@ClawXAI/router**
   - PrivacyRouter: S1/S2/S3 三级隐私检测
   - TokenSaverRouter: 成本感知路由
   - RouterPipeline: 可组合的路由管线
   
-- **@claw-ai/memory**
+- **@ClawXAI/memory**
   - SimpleMemoryRepository: 内存存储实现
-  - ClawAIMemory: 三层记忆系统 (L0/L1/L2)
+  - ClawXAIMemory: 三层记忆系统 (L0/L1/L2)
   - 记忆检索和构建功能
   
-- **@claw-ai/core**
-  - ClawAIEngine: 核心引擎
+- **@ClawXAI/core**
+  - ClawXAIEngine: 核心引擎
   - 消息处理流程
   - 渠道适配器接口
   
-- **claw-ai-gateway**
+- **ClawXAI-gateway**
   - 交互式 CLI 模式
   - 内置测试套件
   - 实时消息处理演示

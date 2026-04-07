@@ -1,4 +1,4 @@
-# 🦎 ClawAI
+# 🦎 ClawXAI
 
 **全渠道 + 情感化 + 隐私保护 + 成本优化的终极 AI 助手**
 
@@ -46,7 +46,7 @@
 ## 🏗️ 架构
 
 ```
-ClawAI 3.0 = OpenClaw + Airi + EdgeClaw + PAI
+ClawXAI 3.0 = OpenClaw + Airi + EdgeClaw + PAI
 
 ├── OpenClaw (基础)
 │   ├── 20+ 消息渠道
@@ -71,7 +71,7 @@ ClawAI 3.0 = OpenClaw + Airi + EdgeClaw + PAI
 ### 项目结构
 
 ```
-claw-ai/
+ClawXAI/
 ├── apps/
 │   └── gateway/          # 网关应用
 ├── packages/
@@ -122,7 +122,7 @@ node apps/gateway/gateway.mjs
 ### 测试示例
 
 ```bash
-🧪 Running ClawAI Tests...
+🧪 Running ClawXAI Tests...
 
 Test 1: Privacy Detection (S3)
   Result: S3 - local-only
@@ -154,14 +154,14 @@ Test 5: Memory System
 
 ## 📦 核心模块
 
-### @claw-ai/router
+### @ClawXAI/router
 
 隐私和成本优化的智能路由系统
 
 ```typescript
-import { createClawAIRouter } from '@claw-ai/router';
+import { createClawXAIRouter } from '@ClawXAI/router';
 
-const router = createClawAIRouter();
+const router = createClawXAIRouter();
 
 const decision = await router.detect({
   message: 'My SSH key is...',
@@ -171,14 +171,14 @@ console.log(decision);
 // { level: 'S3', action: 'local-only', reason: '...' }
 ```
 
-### @claw-ai/memory
+### @ClawXAI/memory
 
 三层记忆系统
 
 ```typescript
-import { createClawAIMemory } from '@claw-ai/memory';
+import { createClawXAIMemory } from '@ClawXAI/memory';
 
-const memory = createClawAIMemory();
+const memory = createClawXAIMemory();
 
 // 检索记忆
 const result = await memory.retrieve('previous project discussion');
@@ -191,14 +191,14 @@ await memory.buildMemory({
 });
 ```
 
-### @claw-ai/core
+### @ClawXAI/core
 
 核心引擎
 
 ```typescript
-import { createClawAI } from '@claw-ai/core';
+import { createClawXAI } from '@ClawXAI/core';
 
-const clawai = await createClawAI();
+const clawai = await createClawXAI();
 
 const response = await clawai.handleMessage({
   userId: 'user123',
@@ -291,4 +291,4 @@ MIT License - 查看 [LICENSE](./LICENSE) 文件
 
 ---
 
-**Made with ❤️ by the ClawAI Team**
+**Made with ❤️ by the ClawXAI Team**

@@ -1,26 +1,26 @@
 #!/usr/bin/env node
 
 /**
- * ClawAI Gateway - 主入口
+ * ClawXAI Gateway - 主入口
  * 
  * 用法：
  *   node gateway.mjs              # 启动网关
  *   node gateway.mjs --test       # 运行测试
  */
 
-import { createClawAI } from '@claw-ai/core';
-import { createClawAIRouter } from '@claw-ai/router';
-import { createClawAIMemory } from '@claw-ai/memory';
+import { createClawXAI } from '@clawxai/core';
+import { createClawXAIRouter } from '@clawxai/router';
+import { createClawXAIMemory } from '@clawxai/memory';
 
 async function main() {
-  console.log('🚀 ClawAI Gateway Starting...\n');
+  console.log('🚀 ClawXAI Gateway Starting...\n');
 
   // 创建核心组件
-  const router = createClawAIRouter();
-  const memory = createClawAIMemory();
-  const clawai = await createClawAI({ router, memory });
+  const router = createClawXAIRouter();
+  const memory = createClawXAIMemory();
+  const clawai = await createClawXAI({ router, memory });
 
-  console.log('✅ ClawAI Engine initialized\n');
+  console.log('✅ ClawXAI Engine initialized\n');
 
   // 运行测试
   if (process.argv.includes('--test')) {
@@ -70,7 +70,7 @@ async function main() {
 
     // 处理消息
     const response = await clawai.handleMessage(context);
-    console.log(`\n🤖 ClawAI: ${response.content}\n`);
+    console.log(`\n🤖 ClawXAI: ${response.content}\n`);
 
     // 添加助手回复
     context.messages.push(response);
@@ -78,7 +78,7 @@ async function main() {
 }
 
 async function runTests(clawai, router) {
-  console.log('🧪 Running ClawAI Tests...\n');
+  console.log('🧪 Running ClawXAI Tests...\n');
 
   // 测试 1: 隐私检测 (S3)
   console.log('Test 1: Privacy Detection (S3)');

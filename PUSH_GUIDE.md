@@ -50,7 +50,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgIHbn8l1DoN2Ddpe2pTYvfWfFkA4U9aJHnDpj11hxz
 添加 SSH key 后，在项目目录执行：
 
 ```bash
-cd /home/yeyuxx/.copaw/workspaces/aDGEsd/claw-ai
+cd /home/yeyuxx/.copaw/workspaces/aDGEsd/ClawXAI
 
 # 切换回 SSH 远程（更安全）
 git remote set-url origin git@github.com:skytitan008/ClawXAI.git
@@ -110,7 +110,7 @@ CI/CD 应该自动开始运行：
 推送成功后，创建 v0.1.0 标签：
 
 ```bash
-cd claw-ai
+cd ClawXAI
 
 # 创建标签
 git tag -a v0.1.0 -m "✨ Phase 1 Complete: Working MVP"

@@ -71,7 +71,7 @@ node apps/gateway/gateway.mjs --test
 
 ```bash
 # 监听模式构建
-pnpm -r --filter '@claw-ai/*' run dev
+pnpm -r --filter '@ClawXAI/*' run dev
 
 # 运行网关
 node apps/gateway/gateway.mjs
@@ -160,7 +160,7 @@ pnpm typecheck
 pnpm test
 
 # 运行特定包的测试
-pnpm --filter @claw-ai/router test
+pnpm --filter @ClawXAI/router test
 
 # 覆盖率报告
 pnpm test -- --coverage
