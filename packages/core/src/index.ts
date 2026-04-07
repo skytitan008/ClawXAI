@@ -4,13 +4,15 @@
  * @module @clawxai/core
  */
 
-import type { Router, RouterDecision, DetectionContext } from '@clawxai/router';
-import type { ClawXAIMemory, MemoryEvent } from '@clawxai/memory';
+import { loadConfig, type ClawXAIConfig as AppConfig } from './config';
+import { createClawXAIRouter, type Router, type RouterDecision, type DetectionContext } from '@clawxai/router';
+import { createClawXAIMemory, type ClawXAIMemory, type MemoryEvent } from '@clawxai/memory';
 
 export interface ClawXAIConfig {
   router?: Router;
   memory?: ClawXAIMemory;
   channels?: string[];
+  config?: AppConfig;
 }
 
 export interface Message {
@@ -30,15 +32,24 @@ export interface ConversationContext {
 /**
  * ClawXAI 核心引擎
  */
-export class ClawXAIEngine {
+export class ClawAIEngine {
   private router: Router;
   private memory: ClawXAIMemory;
+  private config: AppConfig;
   private channels: Map<string, ChannelAdapter>;
 
-  constructor(config: ClawXAIConfig) {
+  constructor(config: ClawXAIConfig = {}) {
+    // 加载配置文件
+    this.config = config.config || loadConfig();
+    
+    // 创建或使用提供的路由器和记忆
     this.router = config.router || createClawXAIRouter();
-    this.memory = config.memory || createClawXAIMemory();
+    this.memory = config.memory || createClawXAIMemory(
+      this.config.memory.storage === 'sqlite' ? this.config.memory.dbPath : undefined
+    );
     this.channels = new Map();
+    
+    console.log('[ClawXAI] Engine initialized with config');
   }
 
   /**
@@ -54,7 +65,9 @@ export class ClawXAIEngine {
       workspaceId: context.workspaceId,
     });
 
-    console.log(`[ClawXAI] Router decision: ${routerDecision.level} - ${routerDecision.action}`);
+    if (this.config.logging.verboseRouter) {
+      console.log(`[ClawXAI] Router decision: ${routerDecision.level} - ${routerDecision.action}`);
+    }
 
     // Step 2: 根据路由决策处理
     let response: Message;
@@ -68,13 +81,15 @@ export class ClawXAIEngine {
     }
 
     // Step 3: 构建记忆
-    await this.memory.buildMemory({
-      type: 'conversation-end',
-      timestamp: Date.now(),
-      messages: [...context.messages, response],
-      metadata: { userId: context.userId, workspaceId: context.workspaceId },
-      duration: Date.now() - lastMessage.timestamp,
-    } as any);
+    if (this.config.memory.autoBuild) {
+      await this.memory.buildMemory({
+        type: 'conversation-end',
+        timestamp: Date.now(),
+        messages: [...context.messages, response],
+        metadata: { userId: context.userId, workspaceId: context.workspaceId },
+        duration: Date.now() - lastMessage.timestamp,
+      } as any);
+    }
 
     return response;
   }
@@ -136,6 +151,13 @@ export class ClawXAIEngine {
   async getMemoryDashboard() {
     return await this.memory.getDashboardData();
   }
+
+  /**
+   * 获取配置
+   */
+  getConfig(): AppConfig {
+    return this.config;
+  }
 }
 
 export interface ChannelAdapter {
@@ -149,10 +171,18 @@ export interface ChannelAdapter {
 /**
  * 创建 ClawXAI 引擎实例
  */
-export async function createClawXAI(config: ClawXAIConfig = {}): Promise<ClawXAIEngine> {
-  const engine = new ClawXAIEngine(config);
+export async function createClawAI(config: ClawXAIConfig = {}): Promise<ClawAIEngine> {
+  const engine = new ClawAIEngine(config);
   return engine;
 }
 
 // 导出默认
-export default createClawXAI;
+export default createClawAI;
+
+// 重新导出配置相关
+export { loadConfig, saveConfig, createExampleConfig } from './config';
+export type { ClawXAIConfig as AppConfig };
+
+// 导出 Dashboard
+export { createDashboardServer, getDashboardStore } from './dashboard';
+export type { DashboardData } from './dashboard';

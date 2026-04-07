@@ -8,6 +8,22 @@
 [![Node](https://img.shields.io/badge/Node-%3E%3D22.0.0-green)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-%3E%3D9.0.0-orange)](https://pnpm.io/)
 [![GitHub stars](https://img.shields.io/github/stars/skytitan008/ClawXAI)](https://github.com/skytitan008/ClawXAI/stargazers)
+[![Version](https://img.shields.io/github/v/tag/skytitan008/ClawXAI?label=version&color=blue)](https://github.com/skytitan008/ClawXAI/releases)
+
+---
+
+## 📢 最新动态
+
+**🎉 v1.1.0 发布!** (2026-04-08)
+- ✨ 配置文件支持 (JSON + 环境变量)
+- ✨ Dashboard 可视化界面
+- ✨ 性能优化 (<10ms 路由决策)
+- ✨ 完整文档体系
+
+**🚀 v1.0.0 发布!** (2026-04-07)
+- 首个稳定版本
+- 隐私检测 + 成本路由 + 三层记忆
+- 交互式 CLI + 测试套件
 
 ---
 
@@ -117,7 +133,36 @@ node apps/gateway/gateway.mjs --test
 
 # 交互式模式
 node apps/gateway/gateway.mjs
+
+# Dashboard 模式 (v1.1.0+)
+node apps/gateway/gateway.mjs --dashboard
 ```
+
+### Dashboard
+
+访问 http://localhost:3000 查看实时统计：
+
+- 📊 请求统计 / Token 使用 / 成本分析
+- 📈 复杂度分布 / 隐私级别 / 模型使用
+- 💾 记忆系统状态
+- ⚡ 实时刷新 (5 秒间隔)
+
+详见：[Dashboard 使用指南](docs/DASHBOARD_GUIDE.md)
+
+### 配置文件 (v1.1.0+)
+
+```bash
+# 创建配置目录
+mkdir -p ~/.clawxai
+
+# 复制示例配置
+cp ~/.clawxai/config.example.json ~/.clawxai/config.json
+
+# 编辑配置
+nano ~/.clawxai/config.json
+```
+
+详见：[配置指南](docs/CONFIG_GUIDE.md)
 
 ### 测试示例
 
