@@ -421,9 +421,28 @@ export interface MemoryDashboard {
 
 /**
  * 创建默认 ClawXAI 记忆系统
+ * 
+ * @param dbPath - 可选的 SQLite 数据库路径 (实验性功能)
+ *                 如果未指定或 SQLite 不可用，将使用内存存储
  */
-export function createClawXAIMemory(): ClawXAIMemory {
-  return new ClawXAIMemory(new SimpleMemoryRepository());
+export function createClawXAIMemory(dbPath?: string): ClawXAIMemory {
+  // 尝试使用 SQLite (实验性)
+  if (dbPath) {
+    try {
+      const { SQLiteMemoryRepository } = require('./sqlite-repository');
+      const repository = new SQLiteMemoryRepository(dbPath);
+      console.log(`[Memory] ✅ Using SQLite storage: ${dbPath}`);
+      return new ClawXAIMemory(repository);
+    } catch (error) {
+      console.warn(`[Memory] ⚠️  SQLite not available (experimental feature)`);
+      console.warn(`[Memory] ℹ️  Falling back to in-memory storage`);
+    }
+  }
+  
+  // 默认使用内存存储 (稳定)
+  const repository = new SimpleMemoryRepository();
+  console.log('[Memory] ✅ Using in-memory storage (stable)');
+  return new ClawXAIMemory(repository);
 }
 
 // 导出默认
