@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+*.bundle.js
+*.d.ts
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Runtime data
+*.db
+*.sqlite
+*.db-journal
+cache/
+temp/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+
+# Temporary files
+tmp/
+tmp*/
+
+# State directories (keep these in ~/.clawai/)
+.state/
+workspace/
+agents/
+
+# Build info
+build-info.json
+*.stamp

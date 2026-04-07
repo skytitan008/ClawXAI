@@ -1,0 +1,40 @@
+{
+  "name": "claw-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ClawAI - 全渠道 + 情感化 + 隐私保护 + 成本优化的终极 AI 助手",
+  "author": "ClawAI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claw-ai/claw-ai.git"
+  },
+  "keywords": [
+    "ai",
+    "assistant",
+    "openclaw",
+    "edgeclaw",
+    "airi",
+    "llm",
+    "agent",
+    "privacy",
+    "memory"
+  ],
+  "scripts": {
+    "dev": "pnpm run dev:gateway",
+    "dev:gateway": "node openclaw.mjs gateway run --watch",
+    "build": "pnpm run build:core && pnpm run build:apps",
+    "build:core": "pnpm -r --filter '@claw-ai/*' run build",
+    "build:apps": "pnpm -r --filter 'claw-ai-app-*' run build",
+    "test": "pnpm -r run test",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "clean": "pnpm -r run clean && rm -rf node_modules",
+    "typecheck": "pnpm -r run typecheck"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@10.32.1"
+}
