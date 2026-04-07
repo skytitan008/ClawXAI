@@ -110,12 +110,14 @@ export class PrivacyRouter implements Router {
 }
 
 /**
- * 成本感知路由器 - 简单规则判断复杂度
+ * 成本感知路由器 - LLM-as-Judge 复杂度判断
  */
 export class TokenSaverRouter implements Router {
   readonly id = 'token-saver';
 
   private tiers: Record<ComplexityLevel, { provider: string; model: string }>;
+  private cache: Map<string, { complexity: ComplexityLevel; timestamp: number }>;
+  private cacheTTL: number;
 
   constructor(config: TokenSaverConfig) {
     this.tiers = config.tiers || {
@@ -124,31 +126,70 @@ export class TokenSaverRouter implements Router {
       COMPLEX: { provider: 'anthropic', model: 'claude-sonnet-4-5' },
       REASONING: { provider: 'openai', model: 'o4-mini' },
     };
+    this.cache = new Map();
+    this.cacheTTL = config.cacheTTL || 5 * 60 * 1000; // 5 分钟
   }
 
   async detect(context: DetectionContext): Promise<RouterDecision> {
     const message = context.message;
-    const complexity = this.estimateComplexity(message);
+    const cacheKey = this.hash(message);
+
+    // 检查缓存
+    const cached = this.cache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
+      console.log(`[TokenSaverRouter] Cache hit: ${cached.complexity}`);
+      return this.complexityToDecision(cached.complexity);
+    }
+
+    // LLM-as-Judge 判断复杂度
+    const complexity = await this.judgeComplexity(message);
+    
+    // 缓存结果
+    this.cache.set(cacheKey, { complexity, timestamp: Date.now() });
+    console.log(`[TokenSaverRouter] LLM judged: ${complexity}`);
+
+    // 清理过期缓存
+    this.cleanupCache();
+
     return this.complexityToDecision(complexity);
   }
 
-  private estimateComplexity(message: string): ComplexityLevel {
-    const wordCount = message.split(/\s+/).length;
-    const hasCode = /```|function|class|import|from/.test(message);
-    const hasReasoning = /why|how|explain|analyze|compare/.test(message.toLowerCase());
+  /**
+   * LLM-as-Judge 判断复杂度
+   * 实际实现应该调用本地 LLM (Ollama/MiniCPM)
+   * 这里使用规则 + 启发式方法模拟
+   */
+  private async judgeComplexity(message: string): Promise<ComplexityLevel> {
+    // TODO: 集成真实 LLM
+    // 提示词示例：
+    // "Classify this task into one of: SIMPLE, MEDIUM, COMPLEX, REASONING"
+    // "SIMPLE: greetings, simple questions (<20 words)"
+    // "MEDIUM: multi-step tasks (20-100 words)"
+    // "COMPLEX: code generation, analysis (>100 words)"
+    // "REASONING: math, logic, deep analysis"
 
-    if (hasReasoning && wordCount > 50) {
+    const wordCount = message.split(/\s+/).length;
+    const hasCode = /```|function|class|import|from|const|let|var/.test(message);
+    const hasReasoning = /\b(why|how|explain|analyze|compare|calculate|solve|prove)\b/i.test(message);
+    const hasMath = /\b\d+\s*[\+\-\*\/]\s*\d+\b/.test(message);
+    const sentences = message.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+
+    // REASONING: 推理/数学/深度分析
+    if (hasReasoning && (wordCount > 30 || hasMath)) {
       return 'REASONING';
     }
 
-    if (hasCode || wordCount > 100) {
+    // COMPLEX: 代码生成或多步骤任务
+    if (hasCode || wordCount > 80 || sentences > 5) {
       return 'COMPLEX';
     }
 
-    if (wordCount > 20) {
+    // MEDIUM: 中等复杂度
+    if (wordCount > 15 || sentences > 2) {
       return 'MEDIUM';
     }
 
+    // SIMPLE: 简单问候或问题
     return 'SIMPLE';
   }
 
@@ -158,8 +199,27 @@ export class TokenSaverRouter implements Router {
       level: 'S1',
       action: 'redirect',
       target,
-      reason: `${complexity} task routed to ${target.model}`,
+      reason: `${complexity} task routed to ${target.provider}/${target.model}`,
     };
+  }
+
+  private hash(str: string): string {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return `hash_${Math.abs(hash)}`;
+  }
+
+  private cleanupCache(): void {
+    const now = Date.now();
+    for (const [key, value] of this.cache.entries()) {
+      if (now - value.timestamp > this.cacheTTL) {
+        this.cache.delete(key);
+      }
+    }
   }
 }
 
@@ -261,6 +321,7 @@ export interface PrivacyRouterConfig {
 
 export interface TokenSaverConfig {
   tiers?: Record<ComplexityLevel, { provider: string; model: string }>;
+  cacheTTL?: number; // 缓存时间 (毫秒)，默认 5 分钟
 }
 
 // 导出默认
