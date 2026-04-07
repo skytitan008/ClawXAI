@@ -1,0 +1,86 @@
+🚀 ClawXKairos Demo Starting...
+
+[ClawXKairos] Agent "ClawXAI-Agent" initialized
+[ClawXKairos] Tick interval: 3000ms
+[ClawXKairos] Registered executor for: demo
+  📋 Task created: demo [high]
+[ClawXKairos] Task created: task_1775589293554_l0fwcvn - demo
+  📋 Task created: demo [normal]
+[ClawXKairos] Task created: task_1775589293554_esnttia - demo
+[ClawXKairos] Starting agent...
+[ClawXKairos] === Tick 1 ===
+
+⏰ Tick 1 starting...
+[ClawXKairos] Executing 2 tasks...
+  ⚙️  Executing: Initialize system
+  ⚙️  Executing: Load configuration
+  ✅ Completed: demo
+  ✅ Task completed: demo
+[ClawXKairos] Task completed: task_1775589293554_l0fwcvn
+  ✅ Completed: demo
+  ✅ Task completed: demo
+[ClawXKairos] Task completed: task_1775589293554_esnttia
+[ClawXKairos] Tick 1 completed in 504ms
+⏰ Tick 1 completed in 504ms
+[ClawXKairos] === Tick 2 ===
+
+⏰ Tick 2 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 2 completed in 1ms
+⏰ Tick 2 completed in 1ms
+[ClawXKairos] === Tick 3 ===
+
+⏰ Tick 3 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 3 completed in 1ms
+⏰ Tick 3 completed in 1ms
+[ClawXKairos] === Tick 4 ===
+
+⏰ Tick 4 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 4 completed in 0ms
+⏰ Tick 4 completed in 0ms
+[ClawXKairos] === Tick 5 ===
+
+⏰ Tick 5 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 5 completed in 1ms
+⏰ Tick 5 completed in 1ms
+[ClawXKairos] === Tick 6 ===
+
+⏰ Tick 6 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 6 completed in 1ms
+⏰ Tick 6 completed in 1ms
+[ClawXKairos] === Tick 7 ===
+
+⏰ Tick 7 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 7 completed in 0ms
+⏰ Tick 7 completed in 0ms
+[ClawXKairos] === Tick 8 ===
+
+⏰ Tick 8 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 8 completed in 1ms
+⏰ Tick 8 completed in 1ms
+[ClawXKairos] === Tick 9 ===
+
+⏰ Tick 9 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 9 completed in 1ms
+⏰ Tick 9 completed in 1ms
+[ClawXKairos] === Tick 10 ===
+
+⏰ Tick 10 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 10 completed in 0ms
+⏰ Tick 10 completed in 0ms
+
+⏹️  Stopping agent...
+
+Final Status:
+  Total Ticks: 10
+  Total Tasks: 2
+  Pending: 0
+[ClawXKairos] Agent stopped

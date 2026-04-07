@@ -1,0 +1,36 @@
+🚀 ClawXAI Gateway Starting...
+
+[Memory] ✅ Using in-memory storage (stable)
+[Config] No config file found, using defaults
+[ClawXAI] Engine initialized with config
+✅ ClawXAI Engine initialized
+
+🧪 Running ClawXAI Tests...
+
+Test 1: Privacy Detection (S3)
+[RouterPipeline] Phase 1 shortcut: privacy-router
+  Result: S3 - local-only
+  ✅ PASS
+
+Test 2: Privacy Detection (S2)
+[RouterPipeline] Phase 1 shortcut: privacy-router
+  Result: S2 - redact-and-forward
+  ✅ PASS
+
+Test 3: Cost Routing (SIMPLE)
+[TokenSaverRouter] LLM judged: SIMPLE
+  Result: S1 - passthrough
+  ✅ PASS
+
+Test 4: Cost Routing (COMPLEX)
+[RouterPipeline] Phase 1 shortcut: privacy-router
+  Result: S2 - redact-and-forward
+  ✅ PASS
+
+Test 5: Memory System
+  Total Memories: undefined
+  L0: undefined, L1: undefined, L2: undefined
+  ✅ PASS
+
+🎉 All tests completed!
+

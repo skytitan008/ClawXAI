@@ -1,0 +1,84 @@
+[ClawXKairos] Agent "ClawXAI-Agent" initialized
+[ClawXKairos] Tick interval: 5000ms
+[ClawXKairos] Registered executor for: data:collect
+[ClawXKairos] Registered executor for: data:analyze
+[ClawXKairos] Registered executor for: report:generate
+[ClawXKairos] Registered executor for: system:cleanup
+🚀 ClawXKairos Demo Starting...
+
+Agent Configuration:
+  Name: ClawXAI-Agent
+  Tick Interval: 5000ms
+  Max Concurrent Tasks: 3
+
+Press Ctrl+C to stop
+
+  📋 Task created: data:collect [high]
+[ClawXKairos] Task created: task_1775589239614_rpvjsx6 - data:collect
+  📋 Task created: data:collect [normal]
+[ClawXKairos] Task created: task_1775589239615_hwr07ur - data:collect
+  📋 Task created: system:cleanup [low]
+[ClawXKairos] Task created: task_1775589239615_8986rlf - system:cleanup
+[ClawXKairos] Starting agent...
+[ClawXKairos] === Tick 1 ===
+
+⏰ Tick 1 starting...
+[ClawXKairos] Executing 3 tasks...
+[ClawXKairos] No executor for task: data:collect
+  ❌ Task failed: data:collect - No executor found
+[ClawXKairos] No executor for task: data:collect
+  ❌ Task failed: data:collect - No executor found
+[ClawXKairos] No executor for task: system:cleanup
+  ❌ Task failed: system:cleanup - No executor found
+[ClawXKairos] Tick 1 completed in 1ms
+⏰ Tick 1 completed in 1ms
+
+[ClawXKairos] === Tick 2 ===
+
+⏰ Tick 2 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 2 completed in 1ms
+⏰ Tick 2 completed in 1ms
+
+[ClawXKairos] === Tick 3 ===
+
+⏰ Tick 3 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 3 completed in 1ms
+⏰ Tick 3 completed in 1ms
+
+
+📌 Creating additional tasks...
+
+  📋 Task created: data:analyze [high]
+[ClawXKairos] Task created: task_1775589254622_yu9e4lu - data:analyze
+[ClawXKairos] === Tick 4 ===
+
+⏰ Tick 4 starting...
+[ClawXKairos] Executing 1 tasks...
+[ClawXKairos] No executor for task: data:analyze
+  ❌ Task failed: data:analyze - No executor found
+[ClawXKairos] Tick 4 completed in 1ms
+⏰ Tick 4 completed in 1ms
+
+[ClawXKairos] === Tick 5 ===
+
+⏰ Tick 5 starting...
+[ClawXKairos] No pending tasks
+[ClawXKairos] Tick 5 completed in 1ms
+⏰ Tick 5 completed in 1ms
+
+
+📌 Creating report task...
+
+  📋 Task created: report:generate [normal]
+[ClawXKairos] Task created: task_1775589264618_11q93vm - report:generate
+[ClawXKairos] === Tick 6 ===
+
+⏰ Tick 6 starting...
+[ClawXKairos] Executing 1 tasks...
+[ClawXKairos] No executor for task: report:generate
+  ❌ Task failed: report:generate - No executor found
+[ClawXKairos] Tick 6 completed in 1ms
+⏰ Tick 6 completed in 1ms
+

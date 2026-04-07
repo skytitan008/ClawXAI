@@ -28,13 +28,13 @@ export interface EmotionResult {
  * 情感关键词库
  */
 const EMOTION_KEYWORDS: Record<EmotionType, string[]> = {
-  joy: ['开心', '高兴', '快乐', '幸福', '棒', '太好了', '哈哈', '嘻嘻', 'love', 'great', 'awesome', 'happy'],
-  sadness: ['难过', '伤心', '悲伤', '哭', '痛苦', '失望', 'sad', 'depressed', 'unhappy'],
-  anger: ['生气', '愤怒', '烦', '讨厌', '混蛋', 'fuck', 'angry', 'hate', 'annoyed'],
-  fear: ['害怕', '恐惧', '担心', '紧张', 'scared', 'afraid', 'worried', 'nervous'],
-  surprise: ['惊讶', '哇', '天啊', '真的吗', 'wow', 'omg', 'really', 'surprised'],
-  disgust: ['恶心', '讨厌', '呸', 'disgust', 'gross', 'yuck'],
-  neutral: ['你好', '谢谢', '再见', '请问', 'hello', 'thanks', 'bye'],
+  joy: ['开心', '高兴', '快乐', '幸福', '棒', '太好了', '哈哈', '嘻嘻', 'love', 'great', 'awesome', 'happy', '笑'],
+  sadness: ['难过', '伤心', '悲伤', '哭', '痛苦', '失望', 'sad', 'depressed', 'unhappy', '悲'],
+  anger: ['生气', '愤怒', '烦', '讨厌', '混蛋', 'fuck', 'angry', 'hate', 'annoyed', '气死'],
+  fear: ['害怕', '恐惧', '担心', '紧张', 'scared', 'afraid', 'worried', 'nervous', '怕'],
+  surprise: ['惊讶', '哇', '天啊', '真的吗', 'wow', 'omg', 'really', 'surprised', '惊', '啊'],
+  disgust: ['恶心', '讨厌', '呸', 'disgust', 'gross', 'yuck', '呕', '恶'],
+  neutral: ['你好', '谢谢', '再见', '请问', 'hello', 'thanks', 'bye', '在吗', '请问', '麻烦'],
 };
 
 /**
@@ -61,7 +61,8 @@ export class EmotionAnalyzer {
     // 计算每种情绪的得分
     for (const [emotion, words] of Object.entries(EMOTION_KEYWORDS)) {
       for (const word of words) {
-        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        // 中文不需要单词边界，直接匹配
+        const regex = new RegExp(word, 'gi');
         const matches = lowerText.match(regex);
         if (matches) {
           scores[emotion as EmotionType] += matches.length;
@@ -71,13 +72,23 @@ export class EmotionAnalyzer {
     }
 
     // 添加标点符号分析
-    if (text.includes('!')) scores.joy += 0.5;
-    if (text.includes('...')) scores.sadness += 0.5;
-    if (text.includes('???')) scores.surprise += 0.5;
-    if (text.includes('😡') || text.includes('😠')) scores.anger += 1;
-    if (text.includes('😂') || text.includes('😄')) scores.joy += 1;
-    if (text.includes('😢') || text.includes('😭')) scores.sadness += 1;
-    if (text.includes('😱') || text.includes('😨')) scores.fear += 1;
+    if (text.includes('!') || text.includes('！')) scores.joy += 0.2;
+    if (text.includes('...')) {
+      // ... 可能表示犹豫或悲伤，但权重不要太高
+      if (scores.sadness > 0) scores.sadness += 0.2;
+      else scores.neutral += 0.1;
+    }
+    if (text.includes('???') || text.includes('？？？')) scores.surprise += 0.3;
+    
+    // Emoji 分析 - 更精确的匹配
+    if (text.includes('😂') || text.includes('😄') || text.includes('😊') || text.includes('😁')) scores.joy += 2;
+    if (text.includes('😢') || text.includes('😭') || text.includes('😞') || text.includes('😔')) scores.sadness += 2;
+    if (text.includes('😡') || text.includes('😠') || text.includes('🤬')) scores.anger += 2;
+    if (text.includes('😨') || text.includes('😰')) scores.fear += 1;
+    if (text.includes('😱')) scores.surprise += 2;  // 😱 更倾向 surprise
+    if (text.includes('😲') || text.includes('😮') || text.includes('🤯')) scores.surprise += 2;
+    if (text.includes('🤢') || text.includes('🤮')) scores.disgust += 3;  // 🤢明确表示恶心
+    if (text.includes('😤')) scores.anger += 1;
 
     // 归一化得分
     const total = Object.values(scores).reduce((sum, score) => sum + score, 0);
@@ -98,9 +109,12 @@ export class EmotionAnalyzer {
     }
 
     // 如果所有得分都很低，标记为中性
-    if (maxScore < 0.3) {
+    if (maxScore < 0.2 || (keywords.length === 0 && !text.match(/[!?.!?.\u{1F600}-\u{1F64F}]/u))) {
       primary = 'neutral';
-      scores.neutral = 1 - Object.values(scores).filter((_, i) => i !== 6).reduce((a, b) => a + b, 0);
+      scores.neutral = 1;
+      for (const emotion of Object.keys(scores).filter(e => e !== 'neutral') as EmotionType[]) {
+        scores[emotion] = 0;
+      }
     }
 
     // 去重关键词
