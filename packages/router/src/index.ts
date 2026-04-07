@@ -305,3 +305,6 @@ export interface TokenSaverConfig {
 
 // 导出默认
 export default createClawXAIRouter;
+
+// 导出 LLM Judge
+export { LLMComplexityJudge, createLLMJudge, type LLMJudgeConfig, type LLMJudgeResult } from './llm-judge';
