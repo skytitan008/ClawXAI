@@ -29,6 +29,72 @@
 
 ---
 
+## [2.0.0] - 2026-04-08
+
+### ✨ MAJOR RELEASE - Self-Driven Agent
+
+### Added
+
+- **ClawXKairos 自驱动 Agent 系统**
+  - Tick 调度系统 (可配置间隔)
+  - 自主任务规划
+  - 并发任务执行 (maxConcurrentTasks)
+  - 任务优先级系统 (low/normal/high/critical)
+  - 事件驱动架构 (tick:*/task:*/agent:*)
+  - 任务超时控制
+  - 自动清理机制
+
+- **情感分析系统**
+  - 7 种情绪识别 (joy/sadness/anger/fear/surprise/disgust/neutral)
+  - 情绪强度分析 (0-1)
+  - 关键词提取
+  - Emoji 支持
+  - 智能响应建议
+  - 颜色编码
+
+- **Discord 渠道集成**
+  - 完整 Discord 机器人支持
+  - 消息收发
+  - 服务器/私聊支持
+  - 事件监听
+  - 元数据追踪
+
+- **Telegram 渠道集成**
+  - 完整 Telegram 机器人支持
+  - Webhook/长轮询模式
+  - 群组/私聊支持
+  - 用户信息追踪
+
+- **演示应用**
+  - apps/kairos-demo/ - ClawXKairos 交互式演示
+  - 60 秒完整任务执行展示
+
+### Changed
+
+- **核心引擎增强**
+  - 集成情感分析
+  - 集成 ClawXKairos
+  - 改进事件系统
+  - 完善类型定义
+
+### Technical
+
+- **新增模块**
+  - packages/core/src/kairos.ts (9.2KB)
+  - packages/core/src/emotion.ts (4.6KB)
+  - extensions/discord-adapter/
+  - extensions/telegram-adapter/
+  - apps/kairos-demo/
+
+### Stats
+
+- 6,500+ 行代码
+- 48 个文件
+- 8 个包
+- 14+ 篇文档
+
+---
+
 ## [1.1.0] - 2026-04-08
 
 ### ✨ Added
