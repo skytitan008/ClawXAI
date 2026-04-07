@@ -7,6 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node](https://img.shields.io/badge/Node-%3E%3D22.0.0-green)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-%3E%3D9.0.0-orange)](https://pnpm.io/)
+[![GitHub stars](https://img.shields.io/github/stars/skytitan008/ClawXAI)](https://github.com/skytitan008/ClawXAI/stargazers)
 
 ---
 
@@ -95,8 +96,8 @@ claw-ai/
 
 ```bash
 # 克隆仓库
-git clone https://github.com/claw-ai/claw-ai.git
-cd claw-ai
+git clone git@github.com:skytitan008/ClawXAI.git
+cd ClawXAI
 
 # 安装依赖
 pnpm install
@@ -284,9 +285,9 @@ MIT License - 查看 [LICENSE](./LICENSE) 文件
 
 ## 📬 联系方式
 
-- **GitHub**: [@claw-ai](https://github.com/claw-ai)
-- **Discord**: [加入社区](https://discord.gg/claw-ai)
-- **Twitter**: [@ClawAI](https://twitter.com/ClawAI)
+- **GitHub**: [@skytitan008](https://github.com/skytitan008)
+- **项目**: [ClawXAI](https://github.com/skytitan008/ClawXAI)
+- **Email**: 188005495@qq.com
 
 ---
 
