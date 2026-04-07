@@ -1,0 +1,15 @@
+{
+  "name": "clawxai-kairos-demo",
+  "version": "2.0.0",
+  "private": true,
+  "description": "ClawXKairos self-driven agent demo",
+  "type": "module",
+  "main": "kairos.mjs",
+  "scripts": {
+    "start": "node kairos.mjs",
+    "dev": "node --watch kairos.mjs"
+  },
+  "dependencies": {
+    "@clawxai/core": "workspace:*"
+  }
+}

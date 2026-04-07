@@ -186,3 +186,18 @@ export type { ClawXAIConfig as AppConfig };
 // 导出 Dashboard
 export { createDashboardServer, getDashboardStore } from './dashboard';
 export type { DashboardData } from './dashboard';
+
+// 导出情感分析
+export { createEmotionAnalyzer, type EmotionType, type EmotionResult } from './emotion';
+
+// 导出 ClawXKairos
+export {
+  createClawXKairos,
+  type ClawXKairos,
+  type AgentConfig,
+  type Task,
+  type TaskStatus,
+  type TaskPriority,
+  type TickContext,
+  type TaskExecutor,
+} from './kairos';
