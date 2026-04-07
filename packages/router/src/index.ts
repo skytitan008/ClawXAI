@@ -311,3 +311,6 @@ export { LLMComplexityJudge, createLLMJudge, type LLMJudgeConfig, type LLMJudgeR
 
 // 导出 Pipeline
 export { RouterPipeline, createRouterPipeline, type RouterPipelineConfig, type PipelineResult } from './pipeline';
+
+// 导出 Token Stats
+export { TokenStatsCollector, createTokenStatsCollector, MODEL_PRICING, type TokenUsage, type TokenStats, type ModelPricing } from './token-stats';
