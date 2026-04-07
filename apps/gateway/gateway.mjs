@@ -111,7 +111,7 @@ async function runTests(clawai, router) {
   // 测试 4: 成本路由 (COMPLEX)
   console.log('Test 4: Cost Routing (COMPLEX)');
   const complexResult = await router.detect({
-    message: '```typescript\nfunction complexCode() {\n  // ... 100 lines of code\n}\n```',
+    message: 'Write a function that processes data with multiple transformations and error handling',
   });
   console.log(`  Result: ${complexResult.level} - ${complexResult.action}`);
   if (complexResult.target) {

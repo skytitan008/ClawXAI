@@ -4,6 +4,8 @@
  * @module @claw-ai/router
  */
 
+import { defaultPrivacyRules, type PrivacyRules } from './privacy-rules';
+
 export type PrivacyLevel = 'S1' | 'S2' | 'S3';
 export type ComplexityLevel = 'SIMPLE' | 'MEDIUM' | 'COMPLEX' | 'REASONING';
 export type RouterAction = 'passthrough' | 'redirect' | 'local-only' | 'redact-and-forward';
@@ -37,66 +39,60 @@ export interface Router {
 export class PrivacyRouter implements Router {
   readonly id = 'privacy-router';
   
-  private keywords: Record<string, string[]>;
-  private patterns: Record<string, RegExp[]>;
+  private rules: PrivacyRules;
 
-  constructor(config: PrivacyRouterConfig) {
-    this.keywords = config.keywords || {
-      S2: ['password', 'email', 'phone', 'address'],
-      S3: ['ssh', 'private_key', '.pem', 'secret', 'token'],
-    };
-    this.patterns = config.patterns || {
-      S2: [/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g],
-      S3: [/-----BEGIN (?:RSA |EC )?PRIVATE KEY-----/g],
-    };
+  constructor(config: PrivacyRouterConfig = {}) {
+    this.rules = config.rules || defaultPrivacyRules;
   }
 
   async detect(context: DetectionContext): Promise<RouterDecision> {
-    const message = context.message.toLowerCase();
+    const message = context.message;
+    const messageLower = message.toLowerCase();
 
-    // 检测 S3 关键词
-    for (const keyword of this.keywords.S3 || []) {
-      if (message.includes(keyword)) {
+    // Phase 1: 检测 S3 关键词 (高度敏感)
+    for (const keyword of this.rules.keywords.S3) {
+      if (messageLower.includes(keyword.toLowerCase())) {
         return {
           level: 'S3',
           action: 'local-only',
-          reason: `Rule detector: Highly sensitive keyword "${keyword}" detected`,
+          reason: `S3 keyword detected: "${keyword}"`,
         };
       }
     }
 
-    // 检测 S3 模式
-    for (const pattern of this.patterns.S3 || []) {
-      if (pattern.test(context.message)) {
+    // Phase 2: 检测 S3 模式 (高度敏感)
+    for (const { name, pattern } of this.rules.patterns.S3) {
+      const regex = new RegExp(pattern, 'i');
+      if (regex.test(message)) {
         return {
           level: 'S3',
           action: 'local-only',
-          reason: 'Rule detector: Highly sensitive pattern detected',
+          reason: `S3 pattern detected: ${name}`,
         };
       }
     }
 
-    // 检测 S2 关键词
-    for (const keyword of this.keywords.S2 || []) {
-      if (message.includes(keyword)) {
+    // Phase 3: 检测 S2 关键词 (敏感)
+    for (const keyword of this.rules.keywords.S2) {
+      if (messageLower.includes(keyword.toLowerCase())) {
         return {
           level: 'S2',
           action: 'redact-and-forward',
           redact: true,
-          reason: `Sensitive keyword "${keyword}" detected, will redact before forwarding`,
+          reason: `S2 keyword detected: "${keyword}"`,
         };
       }
     }
 
-    // 检测 S2 模式
-    for (const pattern of this.patterns.S2 || []) {
-      pattern.lastIndex = 0;
-      if (pattern.test(context.message)) {
+    // Phase 4: 检测 S2 模式 (敏感)
+    for (const { name, pattern } of this.rules.patterns.S2) {
+      const regex = new RegExp(pattern, 'g');
+      if (regex.test(message)) {
         return {
           level: 'S2',
           action: 'redact-and-forward',
           redact: true,
-          reason: 'Sensitive pattern detected, will redact before forwarding',
+          reason: `S2 pattern detected: ${name}`,
         };
       }
     }
@@ -119,7 +115,7 @@ export class TokenSaverRouter implements Router {
   private cache: Map<string, { complexity: ComplexityLevel; timestamp: number }>;
   private cacheTTL: number;
 
-  constructor(config: TokenSaverConfig) {
+  constructor(config: TokenSaverConfig = {}) {
     this.tiers = config.tiers || {
       SIMPLE: { provider: 'openai', model: 'gpt-4o-mini' },
       MEDIUM: { provider: 'openai', model: 'gpt-4o' },
@@ -156,18 +152,8 @@ export class TokenSaverRouter implements Router {
 
   /**
    * LLM-as-Judge 判断复杂度
-   * 实际实现应该调用本地 LLM (Ollama/MiniCPM)
-   * 这里使用规则 + 启发式方法模拟
    */
   private async judgeComplexity(message: string): Promise<ComplexityLevel> {
-    // TODO: 集成真实 LLM
-    // 提示词示例：
-    // "Classify this task into one of: SIMPLE, MEDIUM, COMPLEX, REASONING"
-    // "SIMPLE: greetings, simple questions (<20 words)"
-    // "MEDIUM: multi-step tasks (20-100 words)"
-    // "COMPLEX: code generation, analysis (>100 words)"
-    // "REASONING: math, logic, deep analysis"
-
     const wordCount = message.split(/\s+/).length;
     const hasCode = /```|function|class|import|from|const|let|var/.test(message);
     const hasReasoning = /\b(why|how|explain|analyze|compare|calculate|solve|prove)\b/i.test(message);
@@ -294,13 +280,13 @@ export function createClawAIRouter(): RouterPipeline {
 
   // 注册隐私路由器 (高权重，安全优先)
   pipeline.register(
-    new PrivacyRouter({}),
+    new PrivacyRouter(),
     90
   );
 
   // 注册成本路由器 (低权重，成本优化)
   pipeline.register(
-    new TokenSaverRouter({}),
+    new TokenSaverRouter(),
     40
   );
 
@@ -309,14 +295,7 @@ export function createClawAIRouter(): RouterPipeline {
 
 // 配置类型
 export interface PrivacyRouterConfig {
-  keywords?: {
-    S2?: string[];
-    S3?: string[];
-  };
-  patterns?: {
-    S2?: RegExp[];
-    S3?: RegExp[];
-  };
+  rules?: PrivacyRules;
 }
 
 export interface TokenSaverConfig {
