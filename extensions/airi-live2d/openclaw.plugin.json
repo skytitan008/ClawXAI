@@ -1,0 +1,78 @@
+{
+  "id": "@clawxai/airi-live2d",
+  "version": "1.0.0",
+  "displayName": "Airi Live2D Avatar",
+  "description": "Live2D virtual avatar with emotion-driven expressions",
+  "author": "ClawXAI Team",
+  "license": "MIT",
+  "repository": "https://github.com/skytitan008/ClawXAI",
+  "type": "extension",
+  "main": "index.ts",
+  "categories": ["UI", "Avatar", "Emotion"],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable Live2D avatar"
+      },
+      "model": {
+        "type": "string",
+        "default": "default",
+        "description": "Live2D model ID"
+      },
+      "autoBlink": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable automatic blinking"
+      },
+      "autoBreath": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable breathing animation"
+      }
+    }
+  },
+  "capabilities": {
+    "dashboard": true,
+    "events": ["emotion:detected", "message:received"],
+    "api": true
+  },
+  "dependencies": {
+    "@clawxai/core": "^1.0.0"
+  },
+  "optionalDependencies": {
+    "pixi.js": "^7.0.0",
+    "pixi-live2d-display": "^0.4.0"
+  },
+  "dashboard": {
+    "pages": [
+      {
+        "path": "/avatar",
+        "title": "Virtual Avatar",
+        "icon": "face",
+        "file": "./assets/avatar-view.html"
+      }
+    ]
+  },
+  "api": {
+    "endpoints": [
+      {
+        "path": "/live2d/model",
+        "methods": ["GET", "POST"],
+        "description": "Get model status or load model"
+      },
+      {
+        "path": "/live2d/expression",
+        "methods": ["POST"],
+        "description": "Set expression"
+      },
+      {
+        "path": "/live2d/emotion",
+        "methods": ["POST"],
+        "description": "Set emotion"
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "@clawxai/airi-voice",
+  "version": "1.0.0",
+  "description": "Voice integration for ClawXAI (STT + TTS) from Airi",
+  "license": "MIT",
+  "author": "ClawXAI Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skytitan008/ClawXAI.git",
+    "directory": "extensions/airi-voice"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./stt": "./src/stt-engine.ts",
+    "./tts": "./src/tts-engine.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.8.2"
+  },
+  "openclaw": {
+    "type": "extension",
+    "displayName": "Airi Voice System",
+    "description": "Speech-to-Text and Text-to-Speech integration",
+    "categories": [
+      "Voice",
+      "Audio",
+      "STT",
+      "TTS"
+    ],
+    "capabilities": {
+      "dashboard": true,
+      "events": [
+        "voice:start",
+        "voice:stop",
+        "voice:transcript"
+      ],
+      "api": true
+    }
+  }
+}

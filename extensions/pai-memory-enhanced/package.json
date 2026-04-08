@@ -1,0 +1,50 @@
+{
+  "name": "@clawxai/pai-memory-enhanced",
+  "version": "1.0.0",
+  "description": "Enhanced memory system inspired by PAI (Personal AI Infrastructure)",
+  "license": "MIT",
+  "author": "ClawXAI Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skytitan008/ClawXAI.git",
+    "directory": "extensions/pai-memory-enhanced"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./long-term": "./src/long-term-memory.ts",
+    "./knowledge-graph": "./src/knowledge-graph.ts",
+    "./learning": "./src/learning-engine.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  },
+  "openclaw": {
+    "type": "extension",
+    "displayName": "PAI Enhanced Memory",
+    "description": "Long-term memory, knowledge graph, and learning engine",
+    "categories": [
+      "Memory",
+      "Learning",
+      "Knowledge"
+    ],
+    "capabilities": {
+      "dashboard": true,
+      "events": [
+        "memory:store",
+        "memory:retrieve",
+        "learning:update"
+      ],
+      "api": true
+    }
+  }
+}

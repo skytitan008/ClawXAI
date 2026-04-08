@@ -1,0 +1,83 @@
+{
+  "id": "@clawxai/airi-voice",
+  "version": "1.0.0",
+  "displayName": "Airi Voice System",
+  "description": "Speech-to-Text and Text-to-Speech integration with multi-provider support",
+  "author": "ClawXAI Team",
+  "license": "MIT",
+  "repository": "https://github.com/skytitan008/ClawXAI",
+  "type": "extension",
+  "main": "index.ts",
+  "categories": ["Voice", "Audio", "STT", "TTS"],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable voice system"
+      },
+      "stt": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": ["mock", "whisper", "deepgram", "google", "azure"],
+            "default": "mock"
+          },
+          "apiKey": {
+            "type": "string",
+            "default": ""
+          },
+          "language": {
+            "type": "string",
+            "default": "zh-CN"
+          }
+        }
+      },
+      "tts": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": ["mock", "elevenlabs", "google", "azure"],
+            "default": "mock"
+          },
+          "apiKey": {
+            "type": "string",
+            "default": ""
+          },
+          "voice": {
+            "type": "string",
+            "default": "default"
+          }
+        }
+      },
+      "autoTranscribe": {
+        "type": "boolean",
+        "default": true
+      },
+      "autoSpeak": {
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": ["enabled"]
+  },
+  "capabilities": {
+    "dashboard": true,
+    "events": ["voice:started", "voice:stopped", "transcript:ready", "speech:generated"],
+    "api": true
+  },
+  "dependencies": {
+    "@clawxai/core": "^1.0.0"
+  },
+  "optionalDependencies": {
+    "ws": "^8.18.0"
+  },
+  "keywords": ["voice", "stt", "tts", "speech", "audio", "transcription"],
+  "homepage": "https://github.com/skytitan008/ClawXAI/tree/main/extensions/airi-voice",
+  "bugs": {
+    "url": "https://github.com/skytitan008/ClawXAI/issues"
+  }
+}

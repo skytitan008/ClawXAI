@@ -1,0 +1,47 @@
+{
+  "name": "@clawxai/airi-live2d",
+  "version": "1.0.0",
+  "description": "Live2D virtual avatar integration for ClawXAI (from Airi)",
+  "license": "MIT",
+  "author": "ClawXAI Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skytitan008/ClawXAI.git",
+    "directory": "extensions/airi-live2d"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./renderer": "./src/renderer.ts",
+    "./emotion-mapper": "./src/emotion-mapper.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "pixi.js": "^8.6.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  },
+  "openclaw": {
+    "type": "extension",
+    "displayName": "Airi Live2D Avatar",
+    "description": "Live2D virtual avatar with emotion-driven expressions",
+    "categories": [
+      "UI",
+      "Avatar",
+      "Emotion"
+    ],
+    "capabilities": {
+      "dashboard": true,
+      "events": [
+        "emotion:detected",
+        "message:received"
+      ]
+    }
+  }
+}
